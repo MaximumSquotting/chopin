@@ -80,9 +80,14 @@ public class MeOfferList extends Fragment {
         mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        Offer offer = new Offer();
+
+        offer.initializeData();
+
         // specify an adapter (see also next example)
-        // mAdapter = new MyAdapter(myDataset);
-        // mRecyclerView.setAdapter(mAdapter);
+
+        RVAdapter adapter = new RVAdapter(offer.l);
+        mRecyclerView.setAdapter(adapter);
 
     }
 
