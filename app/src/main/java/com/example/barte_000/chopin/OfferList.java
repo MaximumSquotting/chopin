@@ -1,11 +1,8 @@
 package com.example.barte_000.chopin;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,14 +15,16 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 
 public class OfferList extends Fragment {
     private API.APIInterface _api;
     private ArrayList<Offer> offers;
     private OfferListAdapter offerListAdapter;
-    public RecyclerView recyclerView;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
     public OfferList() {
         // Required empty public constructor
     }
@@ -56,6 +55,8 @@ public class OfferList extends Fragment {
         offerListAdapter = new OfferListAdapter(offers);
         //recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         Call<List<Offer>> query = _api.getAllOffers();
+
+
         query.enqueue(new Callback<List<Offer>>() {
 
             @Override
@@ -71,6 +72,20 @@ public class OfferList extends Fragment {
                 Snackbar.make(view, "Erroreeeee makarena", Snackbar.LENGTH_INDEFINITE).show();
             }
         });
+
+
+        mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.offer_list);
+
+        mRecyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this.getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+  //      offers.add(new Offer("df","df","df",2,3));
+
+        RVAdapter adapter = new RVAdapter(offers);
+        mRecyclerView.setAdapter(adapter);
     }
 
 }
