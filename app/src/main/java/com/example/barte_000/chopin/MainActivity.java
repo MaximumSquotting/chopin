@@ -110,9 +110,4 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    /** Called when the user clicks the Send button */
-    public void Eat(View view) {
-
-    }
-
 }

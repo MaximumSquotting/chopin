@@ -147,7 +147,8 @@
                     android:id="@+id/button"
                     android:layout_weight="1"
                     android:elevation="0dp"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:text="Eat" />
             </LinearLayout>
 
         </LinearLayout>
