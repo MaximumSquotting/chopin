@@ -62,27 +62,39 @@ public class MeOfferList extends Fragment {
         }
 
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.me_offer_list);
+
+    }
+
+    @Override
+    public void onActivityCreated (Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+        mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.me_offer_list);
+
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(myDataset);
-        mRecyclerView.setAdapter(mAdapter);
+        // mAdapter = new MyAdapter(myDataset);
+        // mRecyclerView.setAdapter(mAdapter);
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_me_offer_list, container, false);
+
+
     }
 
 }
