@@ -9,16 +9,17 @@ import java.util.ArrayList;
 public class Offer {
     static ArrayList<Offer> l;
     String name;
+    String description;
     String address;
-    int price;
-    int MaxLimit;
+    int cost_per_person;
+    int max_number_people;
 
-    Offer(String name, String address, int price, int MaxLimit){
+    Offer(String name, String address, String description, int cost_per_person, int max_number_people){
         this.name = name;
         this.address = address;
-        this.price = price;
-        this.MaxLimit = MaxLimit;
-        AddToList(this);
+        this.description = description;
+        this.cost_per_person = cost_per_person;
+        this.max_number_people = max_number_people;
     }
 
     Offer(){}
@@ -31,8 +32,14 @@ public class Offer {
     
     public void initializeData(){
         l = new ArrayList<>();
-        l.add(new Offer("Emma Wilson", "23 years old", 1,1));
-        l.add(new Offer("Lavery Maiss", "25 years old", 2,2));
-        l.add(new Offer("Lillie Watts", "35 years old", 3,3));
+        l.add(new Offer("Tomek", "Grunwald", "Schabowe",10,4));
+        l.add(new Offer("Kasia", "Ogrodowa", "Pizaa",15,3));
+        l.add(new Offer("Ania", "Metalowa", "Frytki",5,6));
+        l.add(new Offer("Tomek", "Grunwald", "Schabowe",10,4));
+        l.add(new Offer("Kasia", "Ogrodowa", "Pizaa",15,3));
+        l.add(new Offer("Ania", "Metalowa", "Frytki",5,6));
+        l.add(new Offer("Tomek", "Grunwald", "Schabowe",10,4));
+        l.add(new Offer("Kasia", "Ogrodowa", "Pizaa",15,3));
+        l.add(new Offer("Ania", "Metalowa", "Frytki",5,6));
     }
 }
