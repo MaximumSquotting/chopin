@@ -32,6 +32,17 @@ public class MainActivity extends AppCompatActivity
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
+                Fragment fragment;
+                fragment = new AddOffer();
+
+                fragmentManager = getSupportFragmentManager();
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment, fragment)
+                        .commit();
+
+
+
 
             }
         });
