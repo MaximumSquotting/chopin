@@ -58,7 +58,7 @@ public class API {
     public interface APIInterface {
 
         // Offers
-        @GET("/offers")
+        @GET("/api/v1/offers/")
         Call<List<Offer>> getAllOffers();
 
         @GET("/offers/{offer_id}")
