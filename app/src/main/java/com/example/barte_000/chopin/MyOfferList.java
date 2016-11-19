@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MeOfferList.OnFragmentInteractionListener} interface
+ * {@link MyOfferList.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MeOfferList#newInstance} factory method to
+ * Use the {@link MyOfferList#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MeOfferList extends Fragment {
+public class MyOfferList extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,7 +31,7 @@ public class MeOfferList extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public MeOfferList() {
+    public MyOfferList() {
         // Required empty public constructor
     }
 
@@ -41,11 +41,11 @@ public class MeOfferList extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MeOfferList.
+     * @return A new instance of fragment MyOfferList.
      */
     // TODO: Rename and change types and number of parameters
-    public static MeOfferList newInstance(String param1, String param2) {
-        MeOfferList fragment = new MeOfferList();
+    public static MyOfferList newInstance(String param1, String param2) {
+        MyOfferList fragment = new MyOfferList();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -100,6 +100,11 @@ public class MeOfferList extends Fragment {
         return inflater.inflate(R.layout.fragment_me_offer_list, container, false);
 
 
+    }
+
+    /** Called when the user clicks the Send button */
+    public void Eat(View view) {
+        
     }
 
 }
