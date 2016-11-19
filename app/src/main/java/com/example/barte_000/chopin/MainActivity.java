@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_OfferList) {
             // Handle the camera action
-
+            fragment = new AddOffer();
         } else if (id == R.id.nav_AddOffer) {
             fragment = new OfferList();
         } else if (id == R.id.nav_MyOffer) {
