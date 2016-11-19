@@ -16,8 +16,10 @@ import okhttp3.Route;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.POST;
 
 /**
  * Created by barte_000 on 19.11.2016.
@@ -63,6 +65,9 @@ public class API {
 
         @GET("/offers/{offer_id}")
         Call<Offer> getOffer(@Path("offer_id") Integer offer_id);
+
+        @POST("/api/v1/offers/")
+        Call<Offer> sendOffer(@Body Offer offer);
     }
 }
 

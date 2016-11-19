@@ -1,5 +1,6 @@
 package com.example.barte_000.chopin;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -105,9 +106,6 @@ public class MainActivity extends AppCompatActivity
             fragment = new AddOffer();
         } else if (id == R.id.nav_MyOffer) {
             fragment = new MyOfferList();
-
-
-
         }
         
         fragmentManager = getSupportFragmentManager();
@@ -120,5 +118,4 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }
