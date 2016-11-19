@@ -25,7 +25,7 @@ import retrofit2.http.Path;
 public class API {
 
     private static APIInterface apiInterface;
-    private static String url = "10.254.38.72:3000";
+    private static String url = "frelia.org:3000/api/v1/offer";
 
     public static APIInterface getClient() {
         if (apiInterface == null) {

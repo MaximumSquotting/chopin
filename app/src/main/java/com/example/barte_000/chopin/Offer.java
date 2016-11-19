@@ -28,7 +28,7 @@ public class Offer {
     }
 
 
-    
+
     public void initializeData(){
         l = new ArrayList<>();
         l.add(new Offer("Emma Wilson", "23 years old", 1,1));
