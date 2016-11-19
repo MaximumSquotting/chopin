@@ -26,7 +26,7 @@ import retrofit2.http.Path;
 public class API {
 
     private static APIInterface apiInterface;
-    private static String url = "http://frelia.org:3001/api/v1/offer/";
+    private static String url = "http://frelia.org:3001/api/v1/offers/";
 
     public static APIInterface getClient() {
         if (apiInterface == null) {
@@ -58,7 +58,7 @@ public class API {
     public interface APIInterface {
 
         // Offers
-        @GET("/offers")
+        @GET("/api/v1/offers/")
         Call<List<Offer>> getAllOffers();
 
         @GET("/offers/{offer_id}")

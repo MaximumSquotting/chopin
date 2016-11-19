@@ -60,14 +60,15 @@ public class OfferList extends Fragment {
 
             @Override
             public void onResponse(Call<List<Offer>> call, Response<List<Offer>> response) {
-
-                offers.addAll(response.body());
-                offerListAdapter.notifyDataSetChanged();
+                if(response.isSuccessful()) {
+                    offers.addAll(response.body());
+                    offerListAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
             public void onFailure(Call<List<Offer>> call, Throwable t) {
-
+                Snackbar.make(view, "Erroreeeee makarena", Snackbar.LENGTH_INDEFINITE).show();
             }
         });
     }
