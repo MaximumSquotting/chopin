@@ -88,9 +88,9 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_OfferList) {
             // Handle the camera action
-            fragment = new AddOffer();
-        } else if (id == R.id.nav_AddOffer) {
             fragment = new OfferList();
+        } else if (id == R.id.nav_AddOffer) {
+            fragment = new AddOffer();
         } else if (id == R.id.nav_MyOffer) {
             fragment = new MeOfferList();
 
@@ -105,8 +105,5 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-    public void AddOffer(){
-
     }
 }
