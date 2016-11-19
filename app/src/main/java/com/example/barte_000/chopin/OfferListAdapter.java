@@ -43,12 +43,21 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.APIH
     }
     @Override
     public int getItemCount() {
-        return Offer.l.size();
+        return offers.size();
     }
 
     @Override
-    public void onBindViewHolder(APIHolder holder, int position) {
+    public void onBindViewHolder(APIHolder offerViewHolder, int position) {
+        /*offerViewHolder.offerName.setText(offerList.get(i).name);
+        offerViewHolder.offerDescription.setText(offerList.get(i).description);
+        offerViewHolder.offerAddres.setText(offerList.get(i).address);
+        offerViewHolder.offerCost.setText(Integer.toString(offerList.get(i).cost_per_person));
+        offerViewHolder.offerPeople.setText(Integer.toString(offerList.get(i).max_number_people));*/
+    }
 
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
 
 }

@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ public class OfferList extends Fragment {
     private ArrayList<Offer> offers;
     private OfferListAdapter offerListAdapter;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     public OfferList() {
@@ -40,6 +40,7 @@ public class OfferList extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         _api = API.getClient();
+
     }
 
     @Override
@@ -51,10 +52,8 @@ public class OfferList extends Fragment {
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
-        offers = new ArrayList<>();
-        offerListAdapter = new OfferListAdapter(offers);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         Call<List<Offer>> query = _api.getAllOffers();
+        offers = new ArrayList<>();
 
 
         query.enqueue(new Callback<List<Offer>>() {
@@ -62,8 +61,10 @@ public class OfferList extends Fragment {
             @Override
             public void onResponse(Call<List<Offer>> call, Response<List<Offer>> response) {
                 if(response.isSuccessful()) {
+                    Log.d("DERP", response.body().toString());
                     offers.addAll(response.body());
-                    offerListAdapter.notifyDataSetChanged();
+                    RVAdapter adapter = new RVAdapter(offers);
+                    mRecyclerView.setAdapter(adapter);
                 }
             }
 
@@ -73,19 +74,11 @@ public class OfferList extends Fragment {
             }
         });
 
-
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.offer_list);
-
         mRecyclerView.setHasFixedSize(true);
-
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-  //      offers.add(new Offer("df","df","df",2,3));
-
-        RVAdapter adapter = new RVAdapter(offers);
-        mRecyclerView.setAdapter(adapter);
     }
 
 }
