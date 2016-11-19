@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+
 import android.widget.TextView;
 
 import java.util.List;
@@ -14,52 +14,55 @@ import java.util.List;
  * Created by psuchan on 19.11.16.
  */
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
+public class RVAdapter extends RecyclerView.Adapter<RVAdapter.OfferViewHolder>{
 
-    public static class PersonViewHolder extends RecyclerView.ViewHolder {
+    public static class OfferViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
-        TextView personName;
-        TextView personAge;
-        ImageView personPhoto;
+        TextView offerName;
+        TextView offerDescription;
+        TextView offerAddres;
+        TextView offerCost;
+        TextView offerPeople;
 
 
 
-
-
-
-
-        PersonViewHolder(View itemView) {
+        OfferViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
-            personName = (TextView)itemView.findViewById(R.id.person_name);
-            personAge = (TextView)itemView.findViewById(R.id.person_age);
-            personPhoto = (ImageView)itemView.findViewById(R.id.person_photo);
+            offerName = (TextView)itemView.findViewById(R.id.name);
+            offerDescription = (TextView)itemView.findViewById(R.id.description);
+            offerAddres = (TextView)itemView.findViewById(R.id.addres);
+            offerCost = (TextView)itemView.findViewById(R.id.cost);
+            offerPeople = (TextView)itemView.findViewById(R.id.people);
+
         }
     }
 
-    List<Offer> persons;
+    List<Offer> offerList;
 
     RVAdapter(List<Offer> persons){
-        this.persons = persons;
+        this.offerList = persons;
     }
 
     @Override
     public int getItemCount() {
-        return persons.size();
+        return offerList.size();
     }
 
     @Override
-    public PersonViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public OfferViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.my_offer, viewGroup, false);
-        PersonViewHolder pvh = new PersonViewHolder(v);
+        OfferViewHolder pvh = new OfferViewHolder(v);
         return pvh;
     }
 
     @Override
-    public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
-        personViewHolder.personName.setText(persons.get(i).address);
-        personViewHolder.personAge.setText(persons.get(i).name);
-       // personViewHolder.personPhoto.setImageResource(persons.get(i).price);
+    public void onBindViewHolder(OfferViewHolder offerViewHolder, int i) {
+        offerViewHolder.offerName.setText(offerList.get(i).name);
+        offerViewHolder.offerDescription.setText(offerList.get(i).description);
+        offerViewHolder.offerAddres.setText(offerList.get(i).address);
+        offerViewHolder.offerCost.setText(Integer.toString(offerList.get(i).cost_per_person));
+        offerViewHolder.offerPeople.setText(Integer.toString(offerList.get(i).max_number_people));
     }
 
     @Override
