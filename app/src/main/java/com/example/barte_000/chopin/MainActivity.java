@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity
 
 
         }
-
+        
         fragmentManager = getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
