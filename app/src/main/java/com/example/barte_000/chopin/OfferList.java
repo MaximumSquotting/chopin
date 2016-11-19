@@ -82,10 +82,8 @@ public class OfferList extends Fragment {
         mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-  //      offers.add(new Offer("df","df","df",2,3));
-
-        RVAdapter adapter = new RVAdapter(offers);
-        mRecyclerView.setAdapter(adapter);
+        offers.add(new Offer("df","df","df",2,3));
+        mRecyclerView.setAdapter(offerListAdapter);
     }
 
 }
