@@ -11,6 +11,7 @@ import java.util.List;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.Route;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -25,20 +26,20 @@ import retrofit2.http.Path;
 public class API {
 
     private static APIInterface apiInterface;
-    private static String url = "frelia.org:3000/api/v1/offer";
+    private static String url = "http://frelia.org:3001/api/v1/offer/";
 
     public static APIInterface getClient() {
         if (apiInterface == null) {
-            Interceptor acceptJSON = new Interceptor() {
-                @Override
-                public okhttp3.Response intercept(Chain chain) throws IOException {
-                    Request request = chain.request().newBuilder().addHeader("Accept", "application/json").build();
-                    return chain.proceed(request);
-                }
-            };
-
-            OkHttpClient okHttpClient = new OkHttpClient();
-            okHttpClient.interceptors().add(acceptJSON);
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .addInterceptor(
+                            new Interceptor() {
+                                @Override
+                                public Response intercept(Interceptor.Chain chain) throws IOException {
+                                    Request request = chain.request().newBuilder()
+                                            .addHeader("Accept", "Application/JSON").build();
+                                    return chain.proceed(request);
+                                }
+                            }).build();
 
             Gson gson = new GsonBuilder()
                     .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
@@ -57,7 +58,7 @@ public class API {
     public interface APIInterface {
 
         // Offers
-        @GET("/Offers")
+        @GET("/offers")
         Call<List<Offer>> getAllOffers();
 
         @GET("/offers/{offer_id}")

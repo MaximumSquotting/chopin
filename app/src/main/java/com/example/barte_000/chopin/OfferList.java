@@ -60,7 +60,7 @@ public class OfferList extends Fragment {
 
             @Override
             public void onResponse(Call<List<Offer>> call, Response<List<Offer>> response) {
-                System.out.print(response.body());
+
                 offers.addAll(response.body());
                 offerListAdapter.notifyDataSetChanged();
             }
