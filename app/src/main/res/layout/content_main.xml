@@ -27,5 +27,6 @@
             android:name="android.support.v4.app.ListFragment"
             android:id="@+id/fragment"
             android:layout_weight="1" />
+
     </LinearLayout>
 </RelativeLayout>

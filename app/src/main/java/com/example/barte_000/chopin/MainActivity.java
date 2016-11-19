@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity
             fragment = new MeOfferList();
 
         }
-
+        
         fragmentManager = getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
