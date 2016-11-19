@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_AddOffer) {
             fragment = new AddOffer();
         } else if (id == R.id.nav_MyOffer) {
-            fragment = new MeOfferList();
+            fragment = new MyOfferList();
 
 
 
@@ -109,4 +109,10 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    /** Called when the user clicks the Send button */
+    public void Eat(View view) {
+
+    }
+
 }
