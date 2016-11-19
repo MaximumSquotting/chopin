@@ -29,7 +29,7 @@ public class Offer {
     }
 
 
-    
+
     public void initializeData(){
         l = new ArrayList<>();
         l.add(new Offer("Tomek", "Grunwald", "Schabowe",10,4));
