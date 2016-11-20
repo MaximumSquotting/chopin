@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity
     public static final String MyPREFERENCES = "MyPrefs" ;
     private android.support.v4.app.FragmentManager fragmentManager;
     private API.APIInterface apiInterface;
+    private User user;
 
     //SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
     //SharedPreferences.Editor editor = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE).edit();
@@ -36,9 +38,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         apiInterface = API.getClient();
-
-
-        User user = new User();
+        user = new User();
         Call<User> call = apiInterface.getToken(user.email, user.password);
         call.enqueue(new Callback<User>() {
 
@@ -47,16 +47,14 @@ public class MainActivity extends AppCompatActivity
                 String uid = response.headers().get("uid");
                 String client = response.headers().get("client");
                 String accessToken = response.headers().get("access-token");
-
-
-                //editor.putString("uid",uid);
-                //editor.putString("client",client);
-                //editor.putString("accessToken",accessToken);
-                //editor.apply();
-
                 API.token = accessToken;
                 API.client = client;
                 API.uid = uid;
+                TextView name = (TextView) findViewById(R.id.full_name);
+                TextView email = (TextView) findViewById(R.id.email);
+                user = response.body();
+                name.setText(user.name);
+                email.setText(user.email);
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
@@ -145,7 +143,8 @@ public class MainActivity extends AppCompatActivity
             fragment = new AddOffer();
         } else if (id == R.id.nav_MyOffer) {
             fragment = new MyOfferList();
-        }else if (id == R.id.nav_MyChippedList){
+        }
+        else if (id == R.id.nav_MyChippedList){
             fragment = new MyChippedList();
         }
         
@@ -159,4 +158,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
