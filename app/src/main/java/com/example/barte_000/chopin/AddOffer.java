@@ -25,15 +25,6 @@ import static com.example.barte_000.chopin.R.id.cost;
 import static com.example.barte_000.chopin.R.id.snackbar_action;
 import static java.lang.Integer.parseInt;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AddOffer.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AddOffer#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AddOffer extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
