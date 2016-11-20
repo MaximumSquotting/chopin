@@ -1,9 +1,7 @@
 package com.example.barte_000.chopin;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -17,15 +15,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
     public static final String MyPREFERENCES = "MyPrefs" ;
     private android.support.v4.app.FragmentManager fragmentManager;
     private API.APIInterface apiInterface;
+
+    private MapFragment mMapFragment;
+    FragmentTransaction fragmentTransaction;
 
     //SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
     //SharedPreferences.Editor editor = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE).edit();
@@ -37,7 +44,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         apiInterface = API.getClient();
 
-
+        mMapFragment = null;
         User user = new User();
         Call<User> call = apiInterface.getToken(user.email, user.password);
         call.enqueue(new Callback<User>() {
@@ -98,6 +105,20 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        // The activity is about to become visible.
+        Fragment fragment = null;
+        fragment = new OfferList();
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment, fragment)
+                .commit();
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -137,6 +158,8 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = null;
 
+
+
         if (id == R.id.nav_OfferList) {
             // Handle the camera action
             fragment = new OfferList();
@@ -144,6 +167,21 @@ public class MainActivity extends AppCompatActivity
             fragment = new AddOffer();
         } else if (id == R.id.nav_MyOffer) {
             fragment = new MyOfferList();
+        } else if (id == R.id.nav_MyMap) {
+
+
+            mMapFragment = MapFragment.newInstance();
+            mMapFragment.getMapAsync(this);
+             fragmentTransaction =
+                    getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment, mMapFragment);
+            fragmentTransaction.commit();
+
+
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+
         }
         
         fragmentManager = getSupportFragmentManager();
@@ -156,4 +194,12 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(0, 0))
+                .title("Marker"));
+    }
+
 }
