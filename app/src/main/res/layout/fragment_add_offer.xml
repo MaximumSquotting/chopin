@@ -8,23 +8,51 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
-        <TextView
-            android:text="Name "
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/offerName" />
+            android:layout_height="wrap_content">
 
-        <EditText
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Description" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Name"
+                android:ems="10"
+                android:id="@+id/add_description" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editText2"
-            android:hint="TypeOfferName" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="Name "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/offerName" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/add_name"
+                android:hint="TypeOfferName" />
+
+        </LinearLayout>
 
         <TextView
             android:text="Adress"
@@ -37,7 +65,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText3"
+            android:id="@+id/add_addres"
             android:hint="TypeOfferAdress" />
 
         <TextView
@@ -51,7 +79,7 @@
             android:layout_height="wrap_content"
             android:inputType="numberSigned"
             android:ems="10"
-            android:id="@+id/offerPrice"
+            android:id="@+id/add_price"
             android:hint="PriceForPlate" />
 
         <TextView
@@ -65,14 +93,14 @@
             android:layout_height="wrap_content"
             android:inputType="numberSigned"
             android:ems="10"
-            android:id="@+id/editText6"
+            android:id="@+id/add_max_person"
             android:hint="MaxLimit" />
 
         <Button
             android:text="Save"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/save" />
+            android:id="@+id/save"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
