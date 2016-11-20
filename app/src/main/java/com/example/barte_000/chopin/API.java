@@ -87,7 +87,8 @@ public class API {
         @POST("/api/v1/auth/sign_in/")
         Call <User> getToken(@Field("email") String email, @Field("password") String password);
 
-
+        @GET("/api/v1/offers/chipped_in")
+        Call <List<Offer>> getChipedOffers();
     }
 }
 

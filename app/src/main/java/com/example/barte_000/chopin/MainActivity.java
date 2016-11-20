@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         Fragment fragment = null;
+        //case
 
         if (id == R.id.nav_OfferList) {
             // Handle the camera action
@@ -144,6 +145,8 @@ public class MainActivity extends AppCompatActivity
             fragment = new AddOffer();
         } else if (id == R.id.nav_MyOffer) {
             fragment = new MyOfferList();
+        }else if (id == R.id.nav_MyChippedList){
+            fragment = new MyChippedList();
         }
         
         fragmentManager = getSupportFragmentManager();

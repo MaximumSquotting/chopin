@@ -61,7 +61,6 @@ public class OfferList extends Fragment {
             @Override
             public void onResponse(Call<List<Offer>> call, Response<List<Offer>> response) {
                 if(response.isSuccessful()) {
-                    Log.d("DERP", response.body().toString());
                     offers.addAll(response.body());
                     RVAdapter adapter = new RVAdapter(offers);
                     mRecyclerView.setAdapter(adapter);
