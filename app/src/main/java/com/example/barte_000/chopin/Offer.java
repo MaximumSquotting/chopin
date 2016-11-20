@@ -13,6 +13,8 @@ public class Offer {
     String address;
     int cost_per_person;
     int max_number_of_people;
+    double lattitude = 1;
+    double longitude = 1;
 
     Offer(int id, String name, String address, String description, int cost_per_person, int max_number_people){
         this.id = id;
@@ -21,6 +23,8 @@ public class Offer {
         this.description = description;
         this.cost_per_person = cost_per_person;
         this.max_number_of_people = max_number_people;
+        lattitude = 15;
+        longitude = 30;
     }
 
     Offer(String name, String address, String description, int cost_per_person, int max_number_people){

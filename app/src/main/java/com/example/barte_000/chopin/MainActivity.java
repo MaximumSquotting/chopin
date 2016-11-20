@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -22,17 +23,26 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        OnMapReadyCallback
+        ,GoogleMap.OnMyLocationButtonClickListener
+    {
 
     public static final String MyPREFERENCES = "MyPrefs" ;
     private android.support.v4.app.FragmentManager fragmentManager;
     private API.APIInterface apiInterface;
     private User user;
 
+        private API.APIInterface _api;
+        private ArrayList<Offer> offers;
     private MapFragment mMapFragment;
     FragmentTransaction fragmentTransaction;
 
@@ -46,10 +56,15 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         apiInterface = API.getClient();
 
-
+        _api = API.getClient();
         mMapFragment = null;
 
         user = new User();
+
+
+
+
+
 
         Call<User> call = apiInterface.getToken(user.email, user.password);
         call.enqueue(new Callback<User>() {
@@ -204,9 +219,58 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onMapReady(GoogleMap map) {
+
+        try {
+            map.setMyLocationEnabled(true);
+        }
+        catch (SecurityException s)
+        {
+
+        }
+
+
+        Call<List<Offer>> query = _api.getAllOffers();
+        offers = new ArrayList<>();
+        final ArrayList<MarkerOptions> markers = new ArrayList<>();
+        query.enqueue(new Callback<List<Offer>>() {
+            @Override
+            public void onResponse(Call<List<Offer>> call, Response<List<Offer>> response) {
+                if(response.isSuccessful()) {
+                    offers.addAll(response.body());
+                    for(int i = 0; i < offers.size(); i++)
+                    {
+                        markers.add(new MarkerOptions()
+                                .position(new LatLng(offers.get(i).lattitude, offers.get(i).longitude))
+                                .title(offers.get(i).description));
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Offer>> call, Throwable t) {
+
+            }
+        });
+
+        for(int i = 1; i < markers.size(); i++) {
+            map.addMarker( markers.get(i));
+        }
+
+        /*
         map.addMarker(new MarkerOptions()
                 .position(new LatLng(0, 0))
                 .title("Marker"));
+                */
+    }
+
+    @Override
+    public boolean onMyLocationButtonClick() {
+        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        // Return false so that we don't consume the event and the default behavior still occurs
+        // (the camera animates to the user's current position).
+
+        return false;
     }
 
 
