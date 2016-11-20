@@ -16,9 +16,15 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="MyOffer" />
         <item
+
             android:id="@+id/nav_MyMap"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="MyMap" />
+
+        <item
+            android:id="@+id/nav_MyChippedList"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="MyChippedList" />
 
     </group>
 

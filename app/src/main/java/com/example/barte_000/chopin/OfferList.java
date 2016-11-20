@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,6 @@ public class OfferList extends Fragment {
             @Override
             public void onResponse(Call<List<Offer>> call, Response<List<Offer>> response) {
                 if(response.isSuccessful()) {
-                    Log.d("DERP", response.body().toString());
                     offers.addAll(response.body());
                     RVAdapter adapter = new RVAdapter(offers);
                     mRecyclerView.setAdapter(adapter);
@@ -76,9 +76,33 @@ public class OfferList extends Fragment {
 
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.offer_list);
         mRecyclerView.setHasFixedSize(true);
-        // use a linear layout manager
+        
         mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+
+
+    }
+    public void del(View view)
+    {
+
+        /*
+                Call<Offer> query = _api.deleteMyOffer(0);
+
+                query.enqueue(new Callback<Offer>() {
+
+                    @Override
+                    public void onResponse(Call<Offer> call, Response<Offer> response) {
+                        if(response.isSuccessful()) {
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Offer> call, Throwable t) {
+
+                    }
+                });*/
     }
 
 }
