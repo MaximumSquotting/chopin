@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity
     private android.support.v4.app.FragmentManager fragmentManager;
     private API.APIInterface apiInterface;
     private User user;
+    private ArrayList<MarkerOptions> markers;
 
         private API.APIInterface _api;
         private ArrayList<Offer> offers;
@@ -218,7 +219,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady(final GoogleMap map) {
 
         try {
             map.setMyLocationEnabled(true);
@@ -231,7 +232,7 @@ public class MainActivity extends AppCompatActivity
 
         Call<List<Offer>> query = _api.getAllOffers();
         offers = new ArrayList<>();
-        final ArrayList<MarkerOptions> markers = new ArrayList<>();
+        markers = new ArrayList<>();
         query.enqueue(new Callback<List<Offer>>() {
             @Override
             public void onResponse(Call<List<Offer>> call, Response<List<Offer>> response) {
@@ -243,7 +244,13 @@ public class MainActivity extends AppCompatActivity
                                 .position(new LatLng(offers.get(i).lattitude, offers.get(i).longitude))
                                 .title(offers.get(i).description));
 
+                        for(int j = 0; j < markers.size(); j++) {
+                            map.addMarker( markers.get(i));
+                        }
+                        
                     }
+
+
                 }
             }
 
@@ -253,7 +260,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        for(int i = 1; i < markers.size(); i++) {
+        for(int i = 0; i < markers.size(); i++) {
             map.addMarker( markers.get(i));
         }
 
