@@ -62,7 +62,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.OfferViewHolder>{
         offerViewHolder.offerDescription.setText(offerList.get(i).description);
         offerViewHolder.offerAddres.setText(offerList.get(i).address);
         offerViewHolder.offerCost.setText(Integer.toString(offerList.get(i).cost_per_person));
-        offerViewHolder.offerPeople.setText(Integer.toString(offerList.get(i).max_number_people));
+        offerViewHolder.offerPeople.setText(Integer.toString(offerList.get(i).max_number_of_people));
     }
 
     @Override

@@ -1,6 +1,9 @@
 package com.example.barte_000.chopin;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -14,16 +17,54 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String MyPREFERENCES = "MyPrefs" ;
     private android.support.v4.app.FragmentManager fragmentManager;
+    private API.APIInterface apiInterface;
+
+    //SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+    //SharedPreferences.Editor editor = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE).edit();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        apiInterface = API.getClient();
+
+
+        User user = new User();
+        Call<User> call = apiInterface.getToken(user.email, user.password);
+        call.enqueue(new Callback<User>() {
+
+            @Override
+            public void onResponse(Call<User> call, retrofit2.Response<User> response) {
+                String uid = response.headers().get("uid");
+                String client = response.headers().get("client");
+                String accessToken = response.headers().get("access-token");
+
+
+                //editor.putString("uid",uid);
+                //editor.putString("client",client);
+                //editor.putString("accessToken",accessToken);
+                //editor.apply();
+
+                API.token = accessToken;
+                API.client = client;
+                API.uid = uid;
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+            }
+        });
+
+
+
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
