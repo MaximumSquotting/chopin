@@ -5,10 +5,16 @@ package com.example.barte_000.chopin;
  */
 
 public class User {
+    int id;
     String email;
     String password;
 
     User(String email, String password){
+        this.email = email;
+        this.password = password;
+    }
+    User(int id, String email, String password){
+        this.id = id;
         this.email = email;
         this.password = password;
     }

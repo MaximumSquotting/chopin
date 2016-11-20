@@ -18,11 +18,13 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -92,6 +94,12 @@ public class API {
 
         @GET("/api/v1/offers/chipped_in")
         Call <List<Offer>> getMyOffers();
+
+        @DELETE("/api/v1/offers/{offer_id}")
+        Call <Offer> deleteMyOffer(@Path("offer_id") Integer offer_id);
+
+        @PATCH("/api/v1/offers/{offer_id}")
+        Call <Offer> editMyOffer(@Path("offer_id") Integer offer_id);
     }
 }
 
