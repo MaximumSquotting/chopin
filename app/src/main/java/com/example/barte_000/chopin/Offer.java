@@ -24,6 +24,14 @@ public class Offer {
         this.max_number_of_people = max_number_people;
     }
 
+    Offer(String name, String address, String description, int cost_per_person, int max_number_people){
+        this.name = name;
+        this.address = address;
+        this.description = description;
+        this.cost_per_person = cost_per_person;
+        this.max_number_of_people = max_number_people;
+    }
+
     Offer(){}
 
     private void AddToList(Offer o){
