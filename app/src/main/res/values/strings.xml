@@ -1,11 +1,22 @@
 <resources>
     <string name="app_name">ChopIn</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="offerlist">Offers</string>
+    <string name="addoffer">Add an offer</string>
+    <string name="myoffer">My offers</string>
+    <string name="mymap">Map</string>
+    <string name="mychippedlist">Past orders</string>
+    <string name="offer_name">Name</string>
+    <string name="offer_name_hint">What are you going to cook?</string>
+    <string name="offer_description_hint">Additional notes</string>
+    <string name="offer_description">Description</string>
+    <string name="offer_address_hint">Where will you be serving your dish?</string>
+    <string name="address">Address</string>
+    <string name="offer_price">Price</string>
+    <string name="offer_price_hint">Price per person</string>
+    <string name="offer_how_many">How many?</string>
+    <string name="offer_how_many_hint">How many people can you serve?</string>
+    <string name="offer_address">Address</string>
 </resources>

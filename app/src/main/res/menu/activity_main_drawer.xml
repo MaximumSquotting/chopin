@@ -5,26 +5,26 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_OfferList"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="OfferList" />
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="@string/offerlist" />
         <item
             android:id="@+id/nav_AddOffer"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="AddOffer" />
+            android:icon="@android:drawable/ic_menu_more"
+            android:title="@string/addoffer" />
         <item
             android:id="@+id/nav_MyOffer"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="MyOffer" />
+            android:icon="@android:drawable/ic_menu_manage"
+            android:title="@string/myoffer" />
         <item
 
             android:id="@+id/nav_MyMap"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="MyMap" />
+            android:icon="@android:drawable/ic_menu_mapmode"
+            android:title="@string/mymap" />
 
         <item
             android:id="@+id/nav_MyChippedList"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="MyChippedList" />
+            android:icon="@android:drawable/ic_menu_recent_history"
+            android:title="@string/mychippedlist" />
 
     </group>
 
