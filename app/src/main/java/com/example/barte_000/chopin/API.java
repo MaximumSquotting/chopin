@@ -14,10 +14,13 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.Route;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import retrofit2.http.POST;
 
@@ -54,6 +57,23 @@ public class API {
                     .build();
             apiInterface = client.create(APIInterface.class);
         }
+
+
+        User user = new User();
+        Call<User> call = apiInterface.getToken(user.email, user.password);
+        call.enqueue(new Callback<User>() {
+
+            @Override
+            public void onResponse(Call<User> call, retrofit2.Response<User> response) {
+                response.headers();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
+
         return apiInterface;
     }
 
@@ -66,11 +86,12 @@ public class API {
         @GET("/offers/{offer_id}")
         Call<Offer> getOffer(@Path("offer_id") Integer offer_id);
 
+        @Headers({})
         @POST("/api/v1/offers/")
         Call<Offer> sendOffer(@Body Offer offer);
 
         @POST("/api/v1/sign_in")
-        Call <User> getToken(@Body User user);
+        Call <User> getToken(@Field("email") String email, @Field("password") String password);
     }
 }
 
