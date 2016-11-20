@@ -89,6 +89,9 @@ public class API {
 
         @GET("/api/v1/offers/chipped_in")
         Call <List<Offer>> getChipedOffers();
+
+        @GET("/api/v1/offers/chipped_in")
+        Call <List<Offer>> getMyOffers();
     }
 }
 
