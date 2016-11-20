@@ -247,8 +247,9 @@ public class MainActivity extends AppCompatActivity
                         for(int j = 0; j < markers.size(); j++) {
                             map.addMarker( markers.get(i));
                         }
-                        
+
                     }
+
 
 
                 }
