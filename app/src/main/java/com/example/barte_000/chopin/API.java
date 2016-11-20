@@ -17,11 +17,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
-<<<<<<< HEAD
-=======
 import retrofit2.http.Headers;
 import retrofit2.http.Path;
->>>>>>> origin/master
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
