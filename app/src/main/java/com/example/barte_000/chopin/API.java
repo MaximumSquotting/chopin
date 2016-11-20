@@ -11,14 +11,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
-import retrofit2.http.Path;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -58,6 +56,7 @@ public class API {
 
 
         User user = new User();
+        /*
         Call<User> call = apiInterface.getToken(user.email, user.password);
         call.enqueue(new Callback<User>() {
 
@@ -71,7 +70,7 @@ public class API {
 
             }
         });
-
+*/
         return apiInterface;
     }
 
