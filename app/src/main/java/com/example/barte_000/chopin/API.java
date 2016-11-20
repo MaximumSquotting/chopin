@@ -1,7 +1,5 @@
 package com.example.barte_000.chopin;
 
-import android.app.usage.UsageEvents;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -12,14 +10,13 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.Route;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by barte_000 on 19.11.2016.
@@ -69,8 +66,8 @@ public class API {
         @POST("/api/v1/offers/")
         Call<Offer> sendOffer(@Body Offer offer);
 
-        @POST("/api/v1/sign_in")
-        Call <User> getToken(@Body User user);
+      //  @POST("/api/v1/sign_in")
+      //  Call <User> getToken(@Body User user);
     }
 }
 
