@@ -68,6 +68,9 @@ public class API {
 
         @POST("/api/v1/offers/")
         Call<Offer> sendOffer(@Body Offer offer);
+
+        @POST("/api/v1/sign_in")
+        Call <User> getToken(@Body User user);
     }
 }
 
