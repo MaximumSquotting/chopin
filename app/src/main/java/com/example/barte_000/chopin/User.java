@@ -8,6 +8,7 @@ public class User {
     int id;
     String email;
     String password;
+    String name;
 
     User(String email, String password){
         this.email = email;
@@ -18,6 +19,13 @@ public class User {
         this.email = email;
         this.password = password;
     }
+    User(int id, String email, String password, String name){
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+    }
+
 
     User(){
         this.email = "user1@example.com";
