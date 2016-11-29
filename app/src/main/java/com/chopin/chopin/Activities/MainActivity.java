@@ -62,12 +62,10 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         apiInterface = API.getClient();
-
+        
         _api = API.getClient();
         mMapFragment = null;
-
         user = new User();
-
 
         Call<User> call = apiInterface.getToken(user.getEmail(), user.getPassword());
         call.enqueue(new Callback<User>() {
@@ -91,7 +89,6 @@ public class MainActivity extends AppCompatActivity
             public void onFailure(Call<User> call, Throwable t) {
             }
         });
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -117,10 +114,8 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
     }
 
     @Override
@@ -165,7 +160,6 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -178,7 +172,6 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         //case
 
-
         if (id == R.id.nav_OfferList) {
             // Handle the camera action
             fragment = new OfferList();
@@ -187,15 +180,12 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_MyOffer) {
             fragment = new MyOfferList();
         } else if (id == R.id.nav_MyMap) {
-
-
             mMapFragment = MapFragment.newInstance();
             mMapFragment.getMapAsync(this);
             fragmentTransaction =
                     getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment, mMapFragment);
             fragmentTransaction.commit();
-
 
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
@@ -236,25 +226,18 @@ public class MainActivity extends AppCompatActivity
                     offers.addAll(response.body());
                     for (int i = 0; i < offers.size(); i++) {
                         markers.add(new MarkerOptions()
-                                .position(new LatLng(offers.get(i).getLattitude(), offers.get(i).getLongitude()))
+                                .position(new LatLng(offers.get(i).getLatitude(), offers.get(i).getLongitude()))
                                 .title(offers.get(i).getDescription()));
-
                         for (int j = 0; j < markers.size(); j++) {
                             map.addMarker(markers.get(i));
                         }
-
                     }
-
-
                 }
             }
-
             @Override
             public void onFailure(Call<List<Offer>> call, Throwable t) {
-
             }
         });
-
         for (int i = 0; i < markers.size(); i++) {
             map.addMarker(markers.get(i));
         }

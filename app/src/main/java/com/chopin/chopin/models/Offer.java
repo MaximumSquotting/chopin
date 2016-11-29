@@ -10,7 +10,7 @@ public class Offer {
     String address;
     int cost_per_person;
     int max_number_of_people;
-    private double lattitude = 1;
+    private double latitude = 1;
     private double longitude = 1;
 
     public static ArrayList<Offer> getL() {
@@ -69,12 +69,12 @@ public class Offer {
         this.max_number_of_people = max_number_of_people;
     }
 
-    public double getLattitude() {
-        return lattitude;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setLattitude(double lattitude) {
-        this.lattitude = lattitude;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
     public double getLongitude() {
@@ -92,7 +92,7 @@ public class Offer {
         this.description = description;
         this.cost_per_person = cost_per_person;
         this.max_number_of_people = max_number_people;
-        lattitude = 15;
+        latitude = 15;
         longitude = 30;
     }
 
