@@ -1,15 +1,19 @@
-package com.example.barte_000.chopin;
+package com.chopin.chopin.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
+import com.chopin.chopin.API.API;
+import com.chopin.chopin.R;
+import com.chopin.chopin.adapters.OfferListAdapter;
+import com.chopin.chopin.adapters.RVAdapter;
+import com.chopin.chopin.models.Offer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +65,7 @@ public class OfferList extends Fragment {
 
             @Override
             public void onResponse(Call<List<Offer>> call, Response<List<Offer>> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     offers.addAll(response.body());
                     RVAdapter adapter = new RVAdapter(offers);
                     mRecyclerView.setAdapter(adapter);
@@ -76,15 +80,14 @@ public class OfferList extends Fragment {
 
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.offer_list);
         mRecyclerView.setHasFixedSize(true);
-        
+
         mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-
     }
-    public void del(View view)
-    {
+
+    public void del(View view) {
 
         /*
                 Call<Offer> query = _api.deleteMyOffer(0);

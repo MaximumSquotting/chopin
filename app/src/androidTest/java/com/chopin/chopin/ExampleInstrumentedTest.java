@@ -1,4 +1,4 @@
-package com.example.barte_000.chopin;
+package com.chopin.chopin;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.barte_000.chopin", appContext.getPackageName());
+        assertEquals("com.chopin.chopin", appContext.getPackageName());
     }
 }

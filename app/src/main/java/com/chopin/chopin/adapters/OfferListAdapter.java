@@ -1,9 +1,12 @@
-package com.example.barte_000.chopin;
+package com.chopin.chopin.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.chopin.chopin.R;
+import com.chopin.chopin.models.Offer;
 
 import java.util.List;
 
@@ -11,7 +14,7 @@ import java.util.List;
  * Created by barte_000 on 19.11.2016.
  */
 
-public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.APIHolder>{
+public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.APIHolder> {
     private List<Offer> offers;
 
     public OfferListAdapter(List<Offer> offers) {
@@ -28,19 +31,13 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.APIH
         notifyDataSetChanged();
     }
 
-    public static class APIHolder extends RecyclerView.ViewHolder {
-
-        public APIHolder(View view) {
-            super(view);
-        }
-    }
-
     @Override
     public APIHolder onCreateViewHolder(ViewGroup parent, int type) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_offer_list, parent, false);
         APIHolder apiHolder = new APIHolder(view);
         return apiHolder;
     }
+
     @Override
     public int getItemCount() {
         return offers.size();
@@ -58,6 +55,13 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.APIH
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public static class APIHolder extends RecyclerView.ViewHolder {
+
+        public APIHolder(View view) {
+            super(view);
+        }
     }
 
 }

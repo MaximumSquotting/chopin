@@ -1,4 +1,4 @@
-package com.example.barte_000.chopin;
+package com.chopin.chopin;
 
 import org.junit.Test;
 

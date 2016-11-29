@@ -1,12 +1,8 @@
-package com.example.barte_000.chopin;
+package com.chopin.chopin.fragments;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.List;
+import com.chopin.chopin.API.API;
+import com.chopin.chopin.R;
+import com.chopin.chopin.models.Offer;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.R.attr.max;
-import static com.example.barte_000.chopin.R.id.cost;
-import static com.example.barte_000.chopin.R.id.snackbar_action;
-import static java.lang.Integer.parseInt;
 
 public class AddOffer extends Fragment {
     private API.APIInterface _api;
@@ -53,8 +46,7 @@ public class AddOffer extends Fragment {
     }
 
     @Override
-    public void onActivityCreated (Bundle savedInstanceState)
-    {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         Button add_button = (Button) getActivity().findViewById(R.id.save);
@@ -62,30 +54,30 @@ public class AddOffer extends Fragment {
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                TextView txt =  (EditText) getActivity().findViewById(R.id.add_name);
+                TextView txt = (EditText) getActivity().findViewById(R.id.add_name);
                 String name = txt.getText().toString();
 
-                txt =  (EditText) getActivity().findViewById(R.id.add_name);
+                txt = (EditText) getActivity().findViewById(R.id.add_name);
                 String address = txt.getText().toString();
 
-                txt =  (EditText) getActivity().findViewById(R.id.add_description);
+                txt = (EditText) getActivity().findViewById(R.id.add_description);
                 String description = txt.getText().toString();
 
-                txt =  (EditText) getActivity().findViewById(R.id.add_price);
+                txt = (EditText) getActivity().findViewById(R.id.add_price);
                 int cost = Integer.parseInt(txt.getText().toString());
 
-                txt =  (EditText) getActivity().findViewById(R.id.add_max_person);
+                txt = (EditText) getActivity().findViewById(R.id.add_max_person);
                 int max = Integer.parseInt(txt.getText().toString());
 
                 Offer new_offer = new Offer(name, address, description, cost, max);
 
-                 Call<Offer> query = _api.sendOffer(new_offer);
+                Call<Offer> query = _api.sendOffer(new_offer);
 
                 query.enqueue(new Callback<Offer>() {
 
                     @Override
                     public void onResponse(Call<Offer> call, Response<Offer> response) {
-                        if(response.isSuccessful()) {
+                        if (response.isSuccessful()) {
 
                         }
                     }

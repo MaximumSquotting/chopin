@@ -1,8 +1,7 @@
-package com.example.barte_000.chopin;
+package com.chopin.chopin.API;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
+import com.chopin.chopin.models.Offer;
+import com.chopin.chopin.models.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -14,7 +13,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
@@ -22,8 +20,6 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -33,14 +29,13 @@ import retrofit2.http.Path;
  */
 
 
-
 public class API {
 
-    private static APIInterface apiInterface;
-    private static String url = "http://frelia.org:3001/api/v1/offers/";
     public static String uid = "";
     public static String token = "";
     public static String client = "";
+    private static APIInterface apiInterface;
+    private static String url = "http://frelia.org:3001/api/v1/offers/";
 
     public static APIInterface getClient() {
         if (apiInterface == null) {
@@ -53,7 +48,7 @@ public class API {
                                             .addHeader("Accept", "Application/JSON")
                                             .addHeader("uid", uid)
                                             .addHeader("client", client)
-                                            .addHeader("access-token",token).build();
+                                            .addHeader("access-token", token).build();
                                     return chain.proceed(request);
                                 }
                             }).build();
@@ -87,19 +82,19 @@ public class API {
 
         @FormUrlEncoded
         @POST("/api/v1/auth/sign_in/")
-        Call <User> getToken(@Field("email") String email, @Field("password") String password);
+        Call<User> getToken(@Field("email") String email, @Field("password") String password);
 
         @GET("/api/v1/offers/chipped_in")
-        Call <List<Offer>> getChipedOffers();
+        Call<List<Offer>> getChipedOffers();
 
         @GET("/api/v1/offers/chipped_in")
-        Call <List<Offer>> getMyOffers();
+        Call<List<Offer>> getMyOffers();
 
         @DELETE("/api/v1/offers/{offer_id}")
-        Call <Offer> deleteMyOffer(@Path("offer_id") Integer offer_id);
+        Call<Offer> deleteMyOffer(@Path("offer_id") Integer offer_id);
 
         @PATCH("/api/v1/offers/{offer_id}")
-        Call <Offer> editMyOffer(@Path("offer_id") Integer offer_id);
+        Call<Offer> editMyOffer(@Path("offer_id") Integer offer_id);
     }
 }
 

@@ -1,4 +1,4 @@
-package com.example.barte_000.chopin;
+package com.chopin.chopin.Activities;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -17,6 +17,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chopin.chopin.API.API;
+import com.chopin.chopin.R;
+import com.chopin.chopin.fragments.AddOffer;
+import com.chopin.chopin.fragments.MyChippedList;
+import com.chopin.chopin.fragments.MyOfferList;
+import com.chopin.chopin.fragments.OfferList;
+import com.chopin.chopin.models.Offer;
+import com.chopin.chopin.models.User;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,19 +41,17 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         OnMapReadyCallback
-        ,GoogleMap.OnMyLocationButtonClickListener
-    {
+        , GoogleMap.OnMyLocationButtonClickListener {
 
-    public static final String MyPREFERENCES = "MyPrefs" ;
+    public static final String MyPREFERENCES = "MyPrefs";
+    FragmentTransaction fragmentTransaction;
     private android.support.v4.app.FragmentManager fragmentManager;
     private API.APIInterface apiInterface;
     private User user;
     private ArrayList<MarkerOptions> markers;
-
-        private API.APIInterface _api;
-        private ArrayList<Offer> offers;
+    private API.APIInterface _api;
+    private ArrayList<Offer> offers;
     private MapFragment mMapFragment;
-    FragmentTransaction fragmentTransaction;
 
     //SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
     //SharedPreferences.Editor editor = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE).edit();
@@ -63,11 +69,7 @@ public class MainActivity extends AppCompatActivity
         user = new User();
 
 
-
-
-
-
-        Call<User> call = apiInterface.getToken(user.email, user.password);
+        Call<User> call = apiInterface.getToken(user.getEmail(), user.getPassword());
         call.enqueue(new Callback<User>() {
 
             @Override
@@ -81,16 +83,14 @@ public class MainActivity extends AppCompatActivity
                 TextView name = (TextView) findViewById(R.id.full_name);
                 TextView email = (TextView) findViewById(R.id.email);
                 user = response.body();
-                name.setText(user.name);
-                email.setText(user.email);
+                name.setText(user.getName());
+                email.setText(user.getEmail());
             }
+
             @Override
             public void onFailure(Call<User> call, Throwable t) {
             }
         });
-
-
-
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -179,7 +179,6 @@ public class MainActivity extends AppCompatActivity
         //case
 
 
-
         if (id == R.id.nav_OfferList) {
             // Handle the camera action
             fragment = new OfferList();
@@ -192,7 +191,7 @@ public class MainActivity extends AppCompatActivity
 
             mMapFragment = MapFragment.newInstance();
             mMapFragment.getMapAsync(this);
-             fragmentTransaction =
+            fragmentTransaction =
                     getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment, mMapFragment);
             fragmentTransaction.commit();
@@ -202,11 +201,10 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
             return true;
 
-        }
-        else if (id == R.id.nav_MyChippedList){
+        } else if (id == R.id.nav_MyChippedList) {
             fragment = new MyChippedList();
         }
-        
+
         fragmentManager = getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
@@ -223,9 +221,7 @@ public class MainActivity extends AppCompatActivity
 
         try {
             map.setMyLocationEnabled(true);
-        }
-        catch (SecurityException s)
-        {
+        } catch (SecurityException s) {
 
         }
 
@@ -236,20 +232,18 @@ public class MainActivity extends AppCompatActivity
         query.enqueue(new Callback<List<Offer>>() {
             @Override
             public void onResponse(Call<List<Offer>> call, Response<List<Offer>> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     offers.addAll(response.body());
-                    for(int i = 0; i < offers.size(); i++)
-                    {
+                    for (int i = 0; i < offers.size(); i++) {
                         markers.add(new MarkerOptions()
-                                .position(new LatLng(offers.get(i).lattitude, offers.get(i).longitude))
-                                .title(offers.get(i).description));
+                                .position(new LatLng(offers.get(i).getLattitude(), offers.get(i).getLongitude()))
+                                .title(offers.get(i).getDescription()));
 
-                        for(int j = 0; j < markers.size(); j++) {
-                            map.addMarker( markers.get(i));
+                        for (int j = 0; j < markers.size(); j++) {
+                            map.addMarker(markers.get(i));
                         }
 
                     }
-
 
 
                 }
@@ -261,8 +255,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        for(int i = 0; i < markers.size(); i++) {
-            map.addMarker( markers.get(i));
+        for (int i = 0; i < markers.size(); i++) {
+            map.addMarker(markers.get(i));
         }
 
         /*

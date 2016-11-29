@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
 
 
-    tools:context="com.example.barte_000.chopin.MainActivity"
+    tools:context="com.chopin.chopin.Activities.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
     <fragment
