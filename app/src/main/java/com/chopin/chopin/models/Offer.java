@@ -98,22 +98,7 @@ public class Offer {
 
     Offer() {
     }
-
     private void AddToList(Offer o) {
         l.add(o);
-    }
-
-
-    public void initializeData() {
-        l = new ArrayList<>();
-        l.add(new Offer("Tomek", "Grunwald", "Schabowe", 10, 4));
-        l.add(new Offer("Kasia", "Ogrodowa", "Pizaa", 15, 3));
-        l.add(new Offer("Ania", "Metalowa", "Frytki", 5, 6));
-        l.add(new Offer("Tomek", "Grunwald", "Schabowe", 10, 4));
-        l.add(new Offer("Kasia", "Ogrodowa", "Pizaa", 15, 3));
-        l.add(new Offer("Ania", "Metalowa", "Frytki", 5, 6));
-        l.add(new Offer("Tomek", "Grunwald", "Schabowe", 10, 4));
-        l.add(new Offer("Kasia", "Ogrodowa", "Pizaa", 15, 3));
-        l.add(new Offer("Ania", "Metalowa", "Frytki", 5, 6));
     }
 }

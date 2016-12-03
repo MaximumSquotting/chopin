@@ -17,6 +17,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -108,9 +109,6 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
                 Fragment fragment = null;
                 fragment = new AddOffer();
 
@@ -118,6 +116,7 @@ public class MainActivity extends AppCompatActivity
                 fragmentManager
                         .beginTransaction()
                         .replace(R.id.fragment, fragment)
+                        .addToBackStack(fragment.toString())
                         .commit();
             }
         });
@@ -151,7 +150,6 @@ public class MainActivity extends AppCompatActivity
                 name.setText(user.getName());
                 email.setText(user.getEmail());
             }
-
             @Override
             public void onFailure(Call<User> call, Throwable t) {
             }
@@ -177,6 +175,8 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
         }
@@ -231,6 +231,7 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction =
                     getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment, mMapFragment);
+            fragmentTransaction.addToBackStack(mMapFragment.toString());
             fragmentTransaction.commit();
 
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -244,6 +245,7 @@ public class MainActivity extends AppCompatActivity
         fragmentManager = getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
+                .addToBackStack(fragment.toString())
                 .replace(R.id.fragment, fragment)
                 .commit();
 

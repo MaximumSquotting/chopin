@@ -74,7 +74,7 @@ public class MyOfferList extends Fragment {
 
             @Override
             public void onFailure(Call<List<Offer>> call, Throwable t) {
-                Snackbar.make(view, "Erroreeeee makarena", Snackbar.LENGTH_INDEFINITE).show();
+                Snackbar.make(view, "Connection problem", Snackbar.LENGTH_INDEFINITE).show();
             }
         });
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.me_offer_list);
