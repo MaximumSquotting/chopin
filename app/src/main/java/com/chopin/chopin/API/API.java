@@ -35,7 +35,7 @@ public class API {
     public static String token = "";
     public static String client = "";
     private static APIInterface apiInterface;
-    private static String url = "http://frelia.org:3000";
+    private static String url = "http://192.168.1.24:3000";
 
     public static APIInterface getClient() {
         if (apiInterface == null) {

@@ -14,12 +14,20 @@ import com.chopin.chopin.API.API;
 import com.chopin.chopin.R;
 import com.chopin.chopin.models.Offer;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddOffer extends Fragment {
     private API.APIInterface _api;
+
+    @BindView(R.id.add_name) EditText name;
+    @BindView(R.id.add_addres) EditText address;
+    @BindView(R.id.add_description) TextView description;
+    @BindView(R.id.add_max_person) TextView max;
+    @BindView(R.id.add_price) TextView cost;
 
     public AddOffer() {
         // Required empty public constructor
@@ -42,11 +50,13 @@ public class AddOffer extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_offer, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_offer, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         Button add_button = (Button) getActivity().findViewById(R.id.save);
@@ -54,42 +64,28 @@ public class AddOffer extends Fragment {
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                TextView txt = (EditText) getActivity().findViewById(R.id.add_name);
-                String name = txt.getText().toString();
+                if(!name.getText().toString().equals("") && !address.getText().toString().equals("") && !description.getText().toString().equals("") && !cost.getText().toString().equals("") && !max.getText().toString().equals("")) {
+                    final Offer new_offer = new Offer(name.getText().toString(), address.getText().toString(), description.getText().toString(), Integer.parseInt(cost.getText().toString()), Integer.parseInt(max.getText().toString()));
 
-                txt = (EditText) getActivity().findViewById(R.id.add_name);
-                String address = txt.getText().toString();
+                    Call<Offer> query = _api.sendOffer(new_offer);
+                    query.enqueue(new Callback<Offer>() {
 
-                txt = (EditText) getActivity().findViewById(R.id.add_description);
-                String description = txt.getText().toString();
-
-                txt = (EditText) getActivity().findViewById(R.id.add_price);
-                int cost = Integer.parseInt(txt.getText().toString());
-
-                txt = (EditText) getActivity().findViewById(R.id.add_max_person);
-                int max = Integer.parseInt(txt.getText().toString());
-
-                final Offer new_offer = new Offer(name, address, description, cost, max);
-
-                Call<Offer> query = _api.sendOffer(new_offer);
-
-                query.enqueue(new Callback<Offer>() {
-
-                    @Override
-                    public void onResponse(Call<Offer> call, Response<Offer> response) {
-                        if (response.isSuccessful()) {
-                            Snackbar.make(view, "Offer added: " + new_offer.getName(), Snackbar.LENGTH_INDEFINITE).show();
+                        @Override
+                        public void onResponse(Call<Offer> call, Response<Offer> response) {
+                            if (response.isSuccessful()) {
+                                Snackbar.make(view, "Offer added: " + new_offer.getName(), Snackbar.LENGTH_INDEFINITE).show();
+                            }
+                            Snackbar.make(view, "response: " + response.message(), Snackbar.LENGTH_INDEFINITE).show();
                         }
-                        Snackbar.make(view, "Fail response: " + response.message(), Snackbar.LENGTH_INDEFINITE).show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Offer> call, Throwable t) {
-                        Snackbar.make(view, "Erroreeeee makarena", Snackbar.LENGTH_INDEFINITE).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Offer> call, Throwable t) {
+                            Snackbar.make(view, "Problem with connection", Snackbar.LENGTH_INDEFINITE).show();
+                        }
+                    });
+                }else{
+                    Snackbar.make(view, "Please fill all fields ", Snackbar.LENGTH_INDEFINITE).show();
+                }
             }
         });
-
     }
 }
