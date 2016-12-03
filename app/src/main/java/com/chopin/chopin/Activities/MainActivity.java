@@ -59,12 +59,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        OnMapReadyCallback,
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        GoogleMap.OnMyLocationButtonClickListener
-        {
+    implements NavigationView.OnNavigationItemSelectedListener,
+    OnMapReadyCallback,
+    GoogleApiClient.ConnectionCallbacks,
+    GoogleApiClient.OnConnectionFailedListener,
+    GoogleMap.OnMyLocationButtonClickListener
+    {
 
     public static final String MyPREFERENCES = "MyPrefs";
     FragmentTransaction fragmentTransaction;
@@ -101,30 +101,8 @@ public class MainActivity extends AppCompatActivity
                     .addApi(LocationServices.API)
                     .build();
         }
-        user = new User();
         mGoogleApiClient.connect();
-        Call<User> call = apiInterface.getToken(user.getEmail(), user.getPassword());
-        call.enqueue(new Callback<User>() {
-
-            @Override
-            public void onResponse(Call<User> call, retrofit2.Response<User> response) {
-                String uid = response.headers().get("uid");
-                String client = response.headers().get("client");
-                String accessToken = response.headers().get("access-token");
-                API.token = accessToken;
-                API.client = client;
-                API.uid = uid;
-                TextView name = (TextView) findViewById(R.id.full_name);
-                TextView email = (TextView) findViewById(R.id.email);
-                user = response.body();
-                name.setText(user.getName());
-                email.setText(user.getEmail());
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-            }
-        });
+        authorization();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +132,31 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    private void authorization(){
+        user = new User();
+        Call<User> call = apiInterface.getToken(user.getEmail(), user.getPassword());
+        call.enqueue(new Callback<User>() {
+
+            @Override
+            public void onResponse(Call<User> call, retrofit2.Response<User> response) {
+                String uid = response.headers().get("uid");
+                String client = response.headers().get("client");
+                String accessToken = response.headers().get("access-token");
+                API.token = accessToken;
+                API.client = client;
+                API.uid = uid;
+                TextView name = (TextView) findViewById(R.id.full_name);
+                TextView email = (TextView) findViewById(R.id.email);
+                user = response.body();
+                name.setText(user.getName());
+                email.setText(user.getEmail());
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+            }
+        });
+    }
     @Override
     protected void onStart() {
         super.onStart();

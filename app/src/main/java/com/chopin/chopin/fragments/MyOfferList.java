@@ -82,8 +82,5 @@ public class MyOfferList extends Fragment {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
     }
-
-
 }

@@ -69,7 +69,7 @@ public class AddOffer extends Fragment {
                 txt = (EditText) getActivity().findViewById(R.id.add_max_person);
                 int max = Integer.parseInt(txt.getText().toString());
 
-                Offer new_offer = new Offer(name, address, description, cost, max);
+                final Offer new_offer = new Offer(name, address, description, cost, max);
 
                 Call<Offer> query = _api.sendOffer(new_offer);
 
@@ -78,8 +78,9 @@ public class AddOffer extends Fragment {
                     @Override
                     public void onResponse(Call<Offer> call, Response<Offer> response) {
                         if (response.isSuccessful()) {
-
+                            Snackbar.make(view, "Offer added: " + new_offer.getName(), Snackbar.LENGTH_INDEFINITE).show();
                         }
+                        Snackbar.make(view, "Fail response: " + response.message(), Snackbar.LENGTH_INDEFINITE).show();
                     }
 
                     @Override

@@ -35,7 +35,7 @@ public class API {
     public static String token = "";
     public static String client = "";
     private static APIInterface apiInterface;
-    private static String url = "http://frelia.org:3001/api/v1/offers/";
+    private static String url = "http://frelia.org:3000";
 
     public static APIInterface getClient() {
         if (apiInterface == null) {
@@ -74,7 +74,7 @@ public class API {
         @GET("/api/v1/offers/")
         Call<List<Offer>> getAllOffers();
 
-        @GET("/offers/{offer_id}")
+        @GET("/api/v1/offers/{offer_id}")
         Call<Offer> getOffer(@Path("offer_id") Integer offer_id);
 
         @POST("/api/v1/offers/")
