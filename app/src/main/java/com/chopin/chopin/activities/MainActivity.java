@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
                 fragmentManager = getSupportFragmentManager();
                 fragmentManager
                         .beginTransaction()
-                        .replace(R.id.fragment, fragment)
+                        .replace(R.id.fragment_content, fragment)
                         .addToBackStack(fragment.toString())
                         .commit();
             }
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity
         fragmentManager = getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment, fragment)
+                .replace(R.id.fragment_content, fragment)
                 .commit();
     }
 
@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity
             mMapFragment = MapFragment.newInstance();
             mMapFragment.getMapAsync(this);
             getFragmentManager().beginTransaction()
-                            .replace(R.id.fragment, mMapFragment)
+                            .replace(R.id.fragment_content, mMapFragment)
                             .addToBackStack(mMapFragment.toString())
                             .commit();
 
@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity
         fragmentManager
                 .beginTransaction()
                 .addToBackStack(fragment.toString())
-                .replace(R.id.fragment, fragment)
+                .replace(R.id.fragment_content, fragment)
                 .commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
