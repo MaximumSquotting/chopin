@@ -1,7 +1,7 @@
 package com.chopin.chopin.models;
 
 public class User {
-    int id;
+    private int id;
     private String email;
     private String password;
     private String name;

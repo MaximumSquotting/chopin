@@ -13,12 +13,9 @@
     <string name="offer_description_hint">Additional notes</string>
     <string name="offer_description">Description</string>
     <string name="offer_address_hint">Where will you be serving your dish?</string>
-    <string name="address">Address</string>
     <string name="offer_price">Price</string>
     <string name="offer_price_hint">Price per person</string>
     <string name="offer_how_many">How many?</string>
     <string name="offer_how_many_hint">How many people can you serve?</string>
     <string name="offer_address">Address</string>
-    <string name="offer_date">Date</string>
-    <string name="offer_time">Time</string>
 </resources>

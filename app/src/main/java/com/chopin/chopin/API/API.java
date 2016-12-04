@@ -24,18 +24,12 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-/**
- * Created by barte_000 on 19.11.2016.
- */
-
-
 public class API {
 
     public static String uid = "";
     public static String token = "";
     public static String client = "";
     private static APIInterface apiInterface;
-    private static String url = "http://192.168.1.24:3000";
 
     public static APIInterface getClient() {
         if (apiInterface == null) {
@@ -57,6 +51,7 @@ public class API {
                     .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                     .create();
 
+            String url = "http://192.168.1.24:3000";
             Retrofit client = new Retrofit.Builder()
                     .baseUrl(url)
                     .addConverterFactory(GsonConverterFactory.create(gson))

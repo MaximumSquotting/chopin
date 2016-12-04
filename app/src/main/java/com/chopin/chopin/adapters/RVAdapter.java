@@ -12,13 +12,9 @@ import com.chopin.chopin.models.Offer;
 
 import java.util.List;
 
-/**
- * Created by psuchan on 19.11.16.
- */
-
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.OfferViewHolder> {
 
-    List<Offer> offerList;
+    private final List<Offer> offerList;
 
     public RVAdapter(List<Offer> persons) {
         this.offerList = persons;
@@ -32,8 +28,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.OfferViewHolder> {
     @Override
     public OfferViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.my_offer, viewGroup, false);
-        OfferViewHolder pvh = new OfferViewHolder(v);
-        return pvh;
+        return new OfferViewHolder(v);
     }
 
     @Override
@@ -45,18 +40,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.OfferViewHolder> {
         offerViewHolder.offerPeople.setText(Integer.toString(offerList.get(i).getMax_number_of_people()));
     }
 
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
-
     public static class OfferViewHolder extends RecyclerView.ViewHolder {
-        CardView cv;
-        TextView offerName;
-        TextView offerDescription;
-        TextView offerAddres;
-        TextView offerCost;
-        TextView offerPeople;
+        final CardView cv;
+        final TextView offerName;
+        final TextView offerDescription;
+        final TextView offerAddres;
+        final TextView offerCost;
+        final TextView offerPeople;
 
 
         OfferViewHolder(View itemView) {

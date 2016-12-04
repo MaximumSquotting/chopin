@@ -26,19 +26,10 @@ import retrofit2.Response;
 public class OfferList extends Fragment {
     private API.APIInterface _api;
     private ArrayList<Offer> offers;
-    private OfferListAdapter offerListAdapter;
     private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     public OfferList() {
         // Required empty public constructor
-    }
-
-    public static OfferList newInstance() {
-        OfferList fragment = new OfferList();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -81,31 +72,10 @@ public class OfferList extends Fragment {
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.offer_list);
         mRecyclerView.setHasFixedSize(true);
 
-        mLayoutManager = new LinearLayoutManager(this.getContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-    }
-
-    public void del(View view) {
-
-        /*
-                Call<Offer> query = _api.deleteMyOffer(0);
-
-                query.enqueue(new Callback<Offer>() {
-
-                    @Override
-                    public void onResponse(Call<Offer> call, Response<Offer> response) {
-                        if(response.isSuccessful()) {
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Offer> call, Throwable t) {
-
-                    }
-                });*/
     }
 
 }
