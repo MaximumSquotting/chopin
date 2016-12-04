@@ -19,4 +19,6 @@
     <string name="offer_how_many">How many?</string>
     <string name="offer_how_many_hint">How many people can you serve?</string>
     <string name="offer_address">Address</string>
+    <string name="offer_date">Date</string>
+    <string name="offer_time">Time</string>
 </resources>

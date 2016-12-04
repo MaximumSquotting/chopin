@@ -16,4 +16,8 @@
     <string name="offer_description_hint">Dodatkowe uwagi</string>
     <string name="offer_how_many">Ile osób?</string>
     <string name="offer_how_many_hint">Maksymalnie ilu osobom ugotować?</string>
+    <string name="offer_time">Czas</string>
+    <string name="offer_date">Data</string>
+    <string name="offer_address">Adres</string>
+    <string name="address"></string>
 </resources>
