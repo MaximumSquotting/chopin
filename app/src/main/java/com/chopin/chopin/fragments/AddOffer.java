@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,6 +118,12 @@ public class AddOffer extends Fragment {
             }
         });
 
+        address.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                return true;
+            }
+        });
 
         Button add_button = (Button) getActivity().findViewById(R.id.save);
         add_button.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +131,7 @@ public class AddOffer extends Fragment {
             public void onClick(final View view) {
                 
                 String s = data.getText().toString() + " " + time.getText().toString() + ":00"; //seconds :00
-                if(!name.getText().toString().equals("") && !address.getText().toString().equals("") && !description.getText().toString().equals("") && !cost.getText().toString().equals("") && !max.getText().toString().equals("")) {
+                if(!name.getText().toString().equals("") && !address.getText().toString().equals("") && !description.getText().toString().equals("") && !cost.getText().toString().equals("") && !max.getText().toString().equals("") && !s.equals("")) {
                     final Offer new_offer = new Offer(name.getText().toString(), address.getText().toString(), description.getText().toString(), Integer.parseInt(cost.getText().toString()), Integer.parseInt(max.getText().toString()), s);
 
                     Call<Offer> query = _api.sendOffer(new_offer);
