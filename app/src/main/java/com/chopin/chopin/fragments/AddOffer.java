@@ -130,9 +130,10 @@ public class AddOffer extends Fragment {
             @Override
             public void onClick(final View view) {
 
-                String s=  myCalendar.toString() + mcurrentTime.toString();
+                String s = data.getText().toString() + " " + time.getText().toString() + ":00"; //seconds :00
+
                 if(!name.getText().toString().equals("") && !address.getText().toString().equals("") && !description.getText().toString().equals("") && !cost.getText().toString().equals("") && !max.getText().toString().equals("")) {
-                    final Offer new_offer = new Offer(name.getText().toString(), address.getText().toString(), description.getText().toString(), Integer.parseInt(cost.getText().toString()), Integer.parseInt(max.getText().toString()));
+                    final Offer new_offer = new Offer(name.getText().toString(), address.getText().toString(), description.getText().toString(), Integer.parseInt(cost.getText().toString()), Integer.parseInt(max.getText().toString()), s);
 
                     Call<Offer> query = _api.sendOffer(new_offer);
                     query.enqueue(new Callback<Offer>() {

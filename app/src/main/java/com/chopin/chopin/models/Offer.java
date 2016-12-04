@@ -1,6 +1,14 @@
 package com.chopin.chopin.models;
 
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class Offer {
     static ArrayList<Offer> l;
@@ -12,7 +20,28 @@ public class Offer {
     int max_number_of_people;
     private double latitude = 1;
     private double longitude = 1;
+    Date OfferDate;
 
+    public Date getOfferDate() {
+        return OfferDate;
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void setOfferDate(String data) {
+        OfferDate = parseData(data);
+    }
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private Date parseData(String data){
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+        try {
+            Date d = format.parse(data);
+            return d;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public static ArrayList<Offer> getL() {
         return l;
     }
@@ -85,7 +114,8 @@ public class Offer {
         this.longitude = longitude;
     }
 
-    public Offer(String name, String address, String description, int cost_per_person, int max_number_people) {
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public Offer(String name, String address, String description, int cost_per_person, int max_number_people, String data) {
         this.id = null;
         this.name = name;
         this.address = address;
@@ -94,6 +124,7 @@ public class Offer {
         this.max_number_of_people = max_number_people;
         this.latitude = 15;
         this.longitude = 30;
+        this.OfferDate = parseData(data);
     }
 
     Offer() {
