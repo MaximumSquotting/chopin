@@ -39,7 +39,7 @@ public class API {
                                 @Override
                                 public Response intercept(Interceptor.Chain chain) throws IOException {
                                     Request request = chain.request().newBuilder()
-                                            .addHeader("Accept", "Application/JSON")
+                                            .addHeader("Accept", "application/json")
                                             .addHeader("uid", uid)
                                             .addHeader("client", client)
                                             .addHeader("access-token", token).build();
