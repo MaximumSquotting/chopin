@@ -1,12 +1,10 @@
-package com.chopin.chopin.Activities;
+package com.chopin.chopin.activities;
 
 import android.Manifest;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,17 +12,14 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,7 +37,6 @@ import com.chopin.chopin.models.User;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -67,23 +61,18 @@ public class MainActivity extends AppCompatActivity
     GoogleMap.OnMyLocationButtonClickListener
     {
 
-    public static final String MyPREFERENCES = "MyPrefs";
-    FragmentTransaction fragmentTransaction;
-    private android.support.v4.app.FragmentManager fragmentManager;
+        private android.support.v4.app.FragmentManager fragmentManager;
     private API.APIInterface apiInterface;
     private User user;
     private ArrayList<MarkerOptions> markers;
     private API.APIInterface _api;
     private ArrayList<Offer> offers;
     private MapFragment mMapFragment;
-    GoogleApiClient mGoogleApiClient = null;
-    Location mLastLocation;
-    GoogleMap mGoogleMap;
+    private GoogleApiClient mGoogleApiClient = null;
+        private GoogleMap mGoogleMap;
     final private int MY_REQUEST_FINE_LOCATION = 124;
     final private int MY_REQUEST_COARSE_LOCATION = 125;
 
-    //SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
-    //SharedPreferences.Editor editor = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE).edit();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,9 +96,10 @@ public class MainActivity extends AppCompatActivity
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-                Fragment fragment = null;
+                Fragment fragment;
                 fragment = new AddOffer();
 
                 fragmentManager = getSupportFragmentManager();
@@ -124,7 +114,6 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -140,8 +129,7 @@ public class MainActivity extends AppCompatActivity
             public void onResponse(Call<User> call, retrofit2.Response<User> response) {
                 String uid = response.headers().get("uid");
                 String client = response.headers().get("client");
-                String accessToken = response.headers().get("access-token");
-                API.token = accessToken;
+                API.token = response.headers().get("access-token");
                 API.client = client;
                 API.uid = uid;
                 TextView name = (TextView) findViewById(R.id.full_name);
@@ -159,7 +147,7 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         // The activity is about to become visible.
-        Fragment fragment = null;
+        Fragment fragment;
         fragment = new OfferList();
         mGoogleApiClient.connect();
 
@@ -209,6 +197,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -228,11 +217,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_MyMap) {
             mMapFragment = MapFragment.newInstance();
             mMapFragment.getMapAsync(this);
-            fragmentTransaction =
-                    getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment, mMapFragment);
-            fragmentTransaction.addToBackStack(mMapFragment.toString());
-            fragmentTransaction.commit();
+            getFragmentManager().beginTransaction()
+                            .replace(R.id.fragment, mMapFragment)
+                            .addToBackStack(mMapFragment.toString())
+                            .commit();
 
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
@@ -262,7 +250,7 @@ public class MainActivity extends AppCompatActivity
             mGoogleMap.setMyLocationEnabled(true);
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                List<String> permissionsNeeded = new ArrayList<String>();
+                List<String> permissionsNeeded = new ArrayList<>();
 
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
@@ -273,7 +261,7 @@ public class MainActivity extends AppCompatActivity
             }
 
 
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+            Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
             if (mLastLocation != null && mGoogleMap != null) {
                 Toast.makeText(this, "MyLocation button clicked," + mLastLocation.getLatitude()+","+ mLastLocation.getLongitude(), Toast.LENGTH_SHORT).show();
@@ -285,7 +273,7 @@ public class MainActivity extends AppCompatActivity
                 mGoogleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         } catch (SecurityException s) {
-
+            Log.e("Chopin$MainActivity", s.getMessage());
         }
 
 
@@ -388,7 +376,6 @@ public class MainActivity extends AppCompatActivity
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                 }
-                return;
             }
         }
     }

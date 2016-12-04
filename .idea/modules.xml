@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ChopIn.iml" filepath="$PROJECT_DIR$/ChopIn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android.iml" filepath="$PROJECT_DIR$/android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wro_salka_barcelona.iml" filepath="$PROJECT_DIR$/wro_salka_barcelona.iml" />
     </modules>
   </component>
 </project>

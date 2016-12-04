@@ -46,13 +46,6 @@ public class AddOffer extends Fragment {
         // Required empty public constructor
     }
 
-    public static AddOffer newInstance() {
-        AddOffer fragment = new AddOffer();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,8 +61,8 @@ public class AddOffer extends Fragment {
         return view;
     }
 
-    Calendar myCalendar = Calendar.getInstance();
-    Calendar mcurrentTime = Calendar.getInstance();
+    private final Calendar myCalendar = Calendar.getInstance();
+    private final Calendar mcurrentTime = Calendar.getInstance();
     private void updateLabel() {
         String myFormat = "yyyy-mm-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -130,7 +123,7 @@ public class AddOffer extends Fragment {
             @Override
             public void onClick(final View view) {
 
-                String s=  myCalendar.toString() + mcurrentTime.toString();
+                String s =  myCalendar.toString() + mcurrentTime.toString();
                 if(!name.getText().toString().equals("") && !address.getText().toString().equals("") && !description.getText().toString().equals("") && !cost.getText().toString().equals("") && !max.getText().toString().equals("")) {
                     final Offer new_offer = new Offer(name.getText().toString(), address.getText().toString(), description.getText().toString(), Integer.parseInt(cost.getText().toString()), Integer.parseInt(max.getText().toString()));
 

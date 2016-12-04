@@ -26,19 +26,10 @@ public class MyChippedList extends Fragment {
 
     private API.APIInterface _api;
     private ArrayList<Offer> offers;
-    private OfferListAdapter offerListAdapter;
     private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     public MyChippedList() {
         // Required empty public constructor
-    }
-
-    public static MyChippedList newInstance() {
-        MyChippedList fragment = new MyChippedList();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -78,7 +69,7 @@ public class MyChippedList extends Fragment {
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.chipped_list);
         mRecyclerView.setHasFixedSize(true);
         // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this.getContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
     }
 }

@@ -3,13 +3,13 @@ package com.chopin.chopin.models;
 import java.util.ArrayList;
 
 public class Offer {
-    static ArrayList<Offer> l;
-    Integer id;
-    String name;
+    private static ArrayList<Offer> l;
+    private Integer id;
+    private String name;
     private String description;
-    String address;
-    int cost_per_person;
-    int max_number_of_people;
+    private String address;
+    private int cost_per_person;
+    private int max_number_of_people;
     private double latitude = 1;
     private double longitude = 1;
 

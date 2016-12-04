@@ -26,19 +26,10 @@ public class MyOfferList extends Fragment {
 
     private API.APIInterface _api;
     private ArrayList<Offer> offers;
-    private OfferListAdapter offerListAdapter;
     private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     public MyOfferList() {
         // Required empty public constructor
-    }
-
-    public static MyOfferList newInstance(String param1, String param2) {
-        MyOfferList fragment = new MyOfferList();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -80,7 +71,7 @@ public class MyOfferList extends Fragment {
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.me_offer_list);
         mRecyclerView.setHasFixedSize(true);
         // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this.getContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
     }
 }
