@@ -206,28 +206,30 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = null;
         //case
+        switch (id){
+            case R.id.nav_OfferList:
+                fragment = new OfferList();
+                break;
+            case R.id.nav_AddOffer:
+                fragment = new AddOffer();
+                break;
+            case R.id.nav_MyOffer:
+                fragment = new MyOfferList();
+                break;
+            case R.id.nav_MyChippedList:
+                fragment = new MyChippedList();
+                break;
+            case R.id.nav_MyMap:
+                mMapFragment = MapFragment.newInstance();
+                mMapFragment.getMapAsync(this);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_content, mMapFragment)
+                        .addToBackStack(mMapFragment.toString())
+                        .commit();
 
-        if (id == R.id.nav_OfferList) {
-            // Handle the camera action
-            fragment = new OfferList();
-        } else if (id == R.id.nav_AddOffer) {
-            fragment = new AddOffer();
-        } else if (id == R.id.nav_MyOffer) {
-            fragment = new MyOfferList();
-        } else if (id == R.id.nav_MyMap) {
-            mMapFragment = MapFragment.newInstance();
-            mMapFragment.getMapAsync(this);
-            getFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_content, mMapFragment)
-                            .addToBackStack(mMapFragment.toString())
-                            .commit();
-
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
-            return true;
-
-        } else if (id == R.id.nav_MyChippedList) {
-            fragment = new MyChippedList();
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                break; //TODO fix
         }
 
         fragmentManager = getSupportFragmentManager();
@@ -260,7 +262,6 @@ public class MainActivity extends AppCompatActivity
                         MY_REQUEST_FINE_LOCATION);
             }
 
-
             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
             if (mLastLocation != null && mGoogleMap != null) {
@@ -275,7 +276,6 @@ public class MainActivity extends AppCompatActivity
         } catch (SecurityException s) {
             Log.e("Chopin$MainActivity", s.getMessage());
         }
-
 
         Call<List<Offer>> query = _api.getAllOffers();
         offers = new ArrayList<>();
