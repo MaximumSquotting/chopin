@@ -12,10 +12,11 @@ import com.chopin.chopin.models.Offer;
 
 import java.util.List;
 
+import butterknife.BindView;
+
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.OfferViewHolder> {
 
     private final List<Offer> offerList;
-
     public RVAdapter(List<Offer> persons) {
         this.offerList = persons;
     }
