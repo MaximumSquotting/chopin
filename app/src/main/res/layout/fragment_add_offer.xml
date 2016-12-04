@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
@@ -16,89 +16,60 @@
         android:id="@+id/add_name"
         android:hint="@string/offer_name_hint" />
 
-    <LinearLayout
-        android:orientation="vertical"
+    <TextView
+        android:text="@string/offer_description"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:text="@string/offer_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="@string/offer_description_hint"
-            android:ems="10"
-            android:id="@+id/add_description" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
+    <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/offer_description_hint"
+        android:ems="10"
+        android:id="@+id/add_description" />
 
-        <TextView
-            android:text="@string/offer_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/add_addres"
-            android:hint="@string/offer_address_hint" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
+    <TextView
+        android:text="@string/offer_address"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:text="@string/offer_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberSigned"
-            android:ems="10"
-            android:id="@+id/add_price"
-            android:hint="@string/offer_price_hint" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
+    <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/add_addres"
+        android:hint="@string/offer_address_hint" />
 
-        <TextView
-            android:text="@string/offer_how_many"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <TextView
+        android:text="@string/offer_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberSigned"
-            android:ems="10"
-            android:id="@+id/add_max_person"
-            android:hint="@string/offer_how_many_hint" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:ems="10"
+        android:id="@+id/add_price"
+        android:hint="@string/offer_price_hint" />
 
+    <TextView
+        android:text="@string/offer_how_many"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-    </LinearLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:ems="10"
+        android:id="@+id/add_max_person"
+        android:hint="@string/offer_how_many_hint" />
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

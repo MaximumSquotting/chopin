@@ -83,6 +83,7 @@ public class FragmentWithMap extends Fragment implements
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.fragment_content, mapFragment)
+                .addToBackStack(MyOfferList.class.getName())
                 .commit();
     }
 
@@ -243,11 +244,5 @@ public class FragmentWithMap extends Fragment implements
                     .build();                   // Creates a CameraPosition from the builder
             mGoogleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
-    }
-    @Override
-    public void onPause() {
-        super.onPause();
-        LocationServices.FusedLocationApi.removeLocationUpdates(
-                mGoogleApiClient, this);
     }
 }
