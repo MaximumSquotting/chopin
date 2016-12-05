@@ -62,7 +62,6 @@ public class API {
         return apiInterface;
     }
 
-
     public interface APIInterface {
 
         // Offers

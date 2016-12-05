@@ -30,11 +30,6 @@ class OfferListAdapter(private val offers: MutableList<Offer>) : RecyclerView.Ad
     }
 
     override fun onBindViewHolder(offerViewHolder: APIHolder, position: Int) {
-        /*offerViewHolder.offerName.setText(offerList.get(i).name);
-        offerViewHolder.offerDescription.setText(offerList.get(i).description);
-        offerViewHolder.offerAddres.setText(offerList.get(i).address);
-        offerViewHolder.offerCost.setText(Integer.toString(offerList.get(i).cost_per_person));
-        offerViewHolder.offerPeople.setText(Integer.toString(offerList.get(i).max_number_people));*/
     }
 
     class APIHolder(view: View) : RecyclerView.ViewHolder(view)

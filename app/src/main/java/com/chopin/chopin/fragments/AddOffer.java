@@ -42,6 +42,8 @@ public class AddOffer extends Fragment {
     @BindView(R.id.add_price) TextView cost;
     @BindView(R.id.date) TextView data;
     @BindView(R.id.offer_time) TextView time;
+    private final Calendar myCalendar = Calendar.getInstance();
+    private final Calendar mcurrentTime = Calendar.getInstance();
 
     public AddOffer() {
         // Required empty public constructor
@@ -56,18 +58,9 @@ public class AddOffer extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_offer, container, false);
         ButterKnife.bind(this, view);
         return view;
-    }
-
-    private final Calendar myCalendar = Calendar.getInstance();
-    private final Calendar mcurrentTime = Calendar.getInstance();
-    private void updateLabel() {
-        String myFormat = "yyyy-mm-dd"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        data.setText(sdf.format(myCalendar.getTime()));
     }
 
     @Override
@@ -79,7 +72,6 @@ public class AddOffer extends Fragment {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                // TODO Auto-generated method stub
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -91,7 +83,6 @@ public class AddOffer extends Fragment {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 new DatePickerDialog(getActivity(), date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -102,8 +93,6 @@ public class AddOffer extends Fragment {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
@@ -129,7 +118,6 @@ public class AddOffer extends Fragment {
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                
                 String s = data.getText().toString() + " " + time.getText().toString() + ":00"; //seconds :00
                 if(!name.getText().toString().equals("") && !address.getText().toString().equals("") && !description.getText().toString().equals("") && !cost.getText().toString().equals("") && !max.getText().toString().equals("") && !s.equals("")) {
                     final Offer new_offer = new Offer(name.getText().toString(), address.getText().toString(), description.getText().toString(), Integer.parseInt(cost.getText().toString()), Integer.parseInt(max.getText().toString()), s);
@@ -154,5 +142,10 @@ public class AddOffer extends Fragment {
                 }
             }
         });
+    }
+    private void updateLabel() {
+        String myFormat = "yyyy-mm-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        data.setText(sdf.format(myCalendar.getTime()));
     }
 }

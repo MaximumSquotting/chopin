@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.chopin.chopin.API.API;
 import com.chopin.chopin.R;
-import com.chopin.chopin.adapters.OfferListAdapter;
 import com.chopin.chopin.adapters.RVAdapter;
 import com.chopin.chopin.models.Offer;
 
@@ -62,7 +61,7 @@ public class MyChippedList extends Fragment {
 
             @Override
             public void onFailure(Call<List<Offer>> call, Throwable t) {
-                Snackbar.make(view, "Erroreeeee makarena", Snackbar.LENGTH_INDEFINITE).show();
+                Snackbar.make(view, "Connection error", Snackbar.LENGTH_INDEFINITE).show();
             }
         });
 

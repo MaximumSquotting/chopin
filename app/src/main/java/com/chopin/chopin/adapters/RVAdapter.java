@@ -11,9 +11,6 @@ import com.chopin.chopin.R;
 import com.chopin.chopin.models.Offer;
 
 import java.util.List;
-
-import butterknife.BindView;
-
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.OfferViewHolder> {
 
     private final List<Offer> offerList;
@@ -48,7 +45,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.OfferViewHolder> {
         final TextView offerAddres;
         final TextView offerCost;
         final TextView offerPeople;
-
 
         OfferViewHolder(View itemView) {
             super(itemView);

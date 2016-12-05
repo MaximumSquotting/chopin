@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.chopin.chopin.API.API;
 import com.chopin.chopin.R;
-import com.chopin.chopin.adapters.OfferListAdapter;
 import com.chopin.chopin.adapters.RVAdapter;
 import com.chopin.chopin.models.Offer;
 
@@ -38,14 +37,11 @@ public class MyOfferList extends Fragment {
         _api = API.getClient();
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_me_offer_list, container, false);
-
-
     }
 
     @Override

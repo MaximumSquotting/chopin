@@ -1,30 +1,22 @@
 package com.chopin.chopin.fragments;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.chopin.chopin.API.API;
 import com.chopin.chopin.R;
-import com.chopin.chopin.activities.MainActivity;
 import com.chopin.chopin.models.Offer;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -34,7 +26,6 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -56,6 +47,7 @@ public class FragmentWithMap extends Fragment implements
         GoogleMap.OnMyLocationButtonClickListener,
         LocationListener {
 
+    private API.APIInterface apiInterface;
     private ArrayList<MarkerOptions> markers;
     private GoogleMap mGoogleMap;
     private GoogleApiClient mGoogleApiClient = null;
@@ -78,6 +70,8 @@ public class FragmentWithMap extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        apiInterface = API.getClient();
         mapFragment = SupportMapFragment.newInstance();
         mapFragment.getMapAsync(this);
 
@@ -123,7 +117,7 @@ public class FragmentWithMap extends Fragment implements
             Log.e("Chopin$MainActivity", s.getMessage());
         }
 
-        Call<List<Offer>> query = MainActivity.apiInterface.getAllOffers();
+        Call<List<Offer>> query = apiInterface.getAllOffers();
         offers = new ArrayList<>();
         markers = new ArrayList<>();
         query.enqueue(new Callback<List<Offer>>() {
@@ -162,7 +156,6 @@ public class FragmentWithMap extends Fragment implements
         Toast.makeText(getActivity(), "MyLocation button clicked", Toast.LENGTH_SHORT).show();
         // Return false so that we don't consume the event and the default behavior still occurs
         // (the camera animates to the user's current position).
-
         return false;
     }
 
@@ -184,8 +177,6 @@ public class FragmentWithMap extends Fragment implements
 
     }
 
-
-
     public boolean isGooglePlayServicesAvailable(Context context) {
         GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
         int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(context);
@@ -200,12 +191,9 @@ public class FragmentWithMap extends Fragment implements
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-
                 } else {
-
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                 }
@@ -216,12 +204,9 @@ public class FragmentWithMap extends Fragment implements
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-
                 } else {
-
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                 }

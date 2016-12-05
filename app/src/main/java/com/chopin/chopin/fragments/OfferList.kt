@@ -51,14 +51,12 @@ class OfferList : Fragment() {
                 Snackbar.make(view!!, "Connection error", Snackbar.LENGTH_INDEFINITE).show()
             }
         })
-
         mRecyclerView = activity.findViewById(R.id.offer_list) as RecyclerView
         mRecyclerView!!.setHasFixedSize(true)
 
         val mLayoutManager = LinearLayoutManager(this.context)
         mRecyclerView!!.layoutManager = mLayoutManager
     }
-
 }// Required empty public constructor
 
 

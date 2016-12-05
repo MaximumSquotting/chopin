@@ -35,13 +35,9 @@ import retrofit2.Callback;
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener
     {
-
     private android.support.v4.app.FragmentManager fragmentManager;
-    public static API.APIInterface apiInterface;
+    private API.APIInterface apiInterface;
     private User user;
-    private ArrayList<Offer> offers;
-    private MapFragment mMapFragment;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +46,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         apiInterface = API.getClient();
-        mMapFragment = null;
-        authorization();
+        userAuthorization();//TODO if there will be users add parameter
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +74,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void authorization(){
+    private void userAuthorization(){
         user = new User();
         Call<User> call = apiInterface.getToken(user.getEmail(), user.getPassword());
         call.enqueue(new Callback<User>() {
@@ -128,28 +123,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -182,9 +155,24 @@ public class MainActivity extends AppCompatActivity
                 .addToBackStack(fragment.toString())
                 .replace(R.id.fragment_content, fragment)
                 .commit();
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
