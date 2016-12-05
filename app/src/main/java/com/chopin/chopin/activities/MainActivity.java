@@ -23,11 +23,7 @@ import com.chopin.chopin.fragments.FragmentWithMap;
 import com.chopin.chopin.fragments.MyChippedList;
 import com.chopin.chopin.fragments.MyOfferList;
 import com.chopin.chopin.fragments.OfferList;
-import com.chopin.chopin.models.Offer;
 import com.chopin.chopin.models.User;
-import com.google.android.gms.maps.MapFragment;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -155,6 +151,7 @@ public class MainActivity extends AppCompatActivity
                 .addToBackStack(fragment.toString())
                 .replace(R.id.fragment_content, fragment)
                 .commit();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

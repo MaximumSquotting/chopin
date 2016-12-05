@@ -5,6 +5,8 @@ import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -115,15 +117,15 @@ public class Offer {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public Offer(String name, String address, String description, int cost_per_person, int max_number_people, String data) {
+    public Offer(String name, String address, String description, int cost_per_person, int max_number_people, String data, LatLng latLng) {
         this.id = null;
         this.name = name;
         this.address = address;
         this.description = description;
         this.cost_per_person = cost_per_person;
         this.max_number_of_people = max_number_people;
-        this.latitude = 15;
-        this.longitude = 30;
+        this.latitude = latLng.latitude;
+        this.longitude = latLng.longitude;
         this.OfferDate = parseData(data);
     }
 
