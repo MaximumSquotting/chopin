@@ -1,13 +1,18 @@
 package com.chopin.chopin.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.chopin.chopin.API.API;
 import com.chopin.chopin.R;
@@ -21,11 +26,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MyOfferList extends Fragment {
+import static com.chopin.chopin.R.layout.fragment_my_chipped_list;
+import static com.chopin.chopin.R.layout.my_offer;
+
+public class MyOfferList extends Fragment{
 
     private API.APIInterface _api;
     private ArrayList<Offer> offers;
     private RecyclerView mRecyclerView;
+    private SwipeRefreshLayout swipe;
 
     public MyOfferList() {
         // Required empty public constructor
@@ -35,6 +44,7 @@ public class MyOfferList extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         _api = API.getClient();
+
     }
 
     @Override
@@ -46,6 +56,10 @@ public class MyOfferList extends Fragment {
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
+        get();
+    }
+
+    public void get(){
         Call<List<Offer>> query = _api.getMyOffers();
         offers = new ArrayList<>();
         query.enqueue(new Callback<List<Offer>>() {
@@ -61,7 +75,7 @@ public class MyOfferList extends Fragment {
 
             @Override
             public void onFailure(Call<List<Offer>> call, Throwable t) {
-                Snackbar.make(view, "Connection problem", Snackbar.LENGTH_INDEFINITE).show();
+                Snackbar.make(getView(), "Connection problem", Snackbar.LENGTH_INDEFINITE).show();
             }
         });
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.me_offer_list);
@@ -70,4 +84,5 @@ public class MyOfferList extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
     }
+
 }

@@ -81,7 +81,7 @@ public class API {
         @GET("/api/v1/offers/chipped_in")
         Call<List<Offer>> getChipedOffers();
 
-        @GET("/api/v1/offers/chipped_in")
+        @GET("/api/v1/offers/my")
         Call<List<Offer>> getMyOffers();
 
         @DELETE("/api/v1/offers/{offer_id}")

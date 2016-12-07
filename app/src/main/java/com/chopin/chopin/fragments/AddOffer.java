@@ -173,6 +173,8 @@ public class AddOffer extends Fragment {
                 }
             }
         });
+
+
     }
     private void updateLabel() {
         String myFormat = "yyyy-MM-dd"; //In which you need put here
@@ -201,7 +203,7 @@ public class AddOffer extends Fragment {
         return null;
     }
 
-
+//TODO All code below to refactor/remove do it properly.
 //Sometimes happens that device gives location = null
 
     public class fetchLatLongFromService extends
