@@ -46,7 +46,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.R.attr.fragment;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class AddOffer extends Fragment {

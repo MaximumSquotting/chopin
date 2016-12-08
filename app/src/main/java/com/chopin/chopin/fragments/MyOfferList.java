@@ -68,7 +68,7 @@ public class MyOfferList extends Fragment{
             public void onResponse(Call<List<Offer>> call, Response<List<Offer>> response) {
                 if (response.isSuccessful()) {
                     offers.addAll(response.body());
-                    RVAdapter adapter = new RVAdapter(offers);
+                    RVAdapter adapter = new RVAdapter(offers,getActivity());
                     mRecyclerView.setAdapter(adapter);
                 }
             }

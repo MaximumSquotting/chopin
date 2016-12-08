@@ -42,7 +42,7 @@ class OfferList : Fragment() {
             override fun onResponse(call: Call<List<Offer>>, response: Response<List<Offer>>) {
                 if (response.isSuccessful) {
                     offers!!.addAll(response.body())
-                    val adapter = RVAdapter(offers)
+                    val adapter = RVAdapter(offers, activity)
                     mRecyclerView!!.adapter = adapter
                 }
             }

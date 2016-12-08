@@ -10,6 +10,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class Offer {
@@ -133,5 +134,15 @@ public class Offer {
     }
     private void AddToList(Offer o) {
         l.add(o);
+    }
+    public String[] parse(){
+        String[] l = {this.getName(), this.getDescription(), this.getAddress(), String.valueOf(this.getCost_per_person()), String.valueOf(this.getMax_number_of_people()),this.getOfferDate().toString() };
+        //l.add(this.getName());
+        //l.add(this.getDescription());
+        //l.add(this.getAddress());
+        //l.add(String.valueOf(this.getCost_per_person()));
+        //l.add(String.valueOf(this.getMax_number_of_people()));
+        //l.add(this.getOfferDate().toString());
+        return l;
     }
 }
