@@ -28,6 +28,7 @@ import com.chopin.chopin.API.API;
 import com.chopin.chopin.R;
 import com.chopin.chopin.models.Offer;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,6 +62,8 @@ public class AddOffer extends Fragment {
     private final Calendar myCalendar = Calendar.getInstance();
     private final Calendar mcurrentTime = Calendar.getInstance();
     private android.support.v4.app.FragmentManager fragmentManager;
+    private Offer offer;
+    private boolean edit;
 
     public AddOffer() {
         // Required empty public constructor
@@ -77,6 +80,27 @@ public class AddOffer extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_offer, container, false);
         ButterKnife.bind(this, view);
+
+        Bundle extras = getActivity().getIntent().getExtras();
+        String jsonOffer = null;
+        if (extras != null && extras.getString("Offer") != null) {
+            jsonOffer = extras.getString("Offer");
+            getActivity().getIntent().removeExtra("Offer");
+
+            offer = new Gson().fromJson(jsonOffer, Offer.class);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(offer.getOfferDate());
+            name.setText(offer.getName());
+            address.setText(offer.getAddress());
+            description.setText(offer.getDescription());
+            max.setText(Integer.toString(offer.getMax_number_of_people()));
+            cost.setText(Integer.toString(offer.getCost_per_person()));
+            time.setText(cal.HOUR_OF_DAY + ":" + cal.MINUTE);
+            data.setText(cal.YEAR + "-" + cal.MONTH + "-" + cal.DAY_OF_MONTH);
+
+            edit = true;
+        }else edit = false;
+
         return view;
     }
 
@@ -124,14 +148,6 @@ public class AddOffer extends Fragment {
             }
         });
 
-        address.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                address.setNextFocusRightId(R.id.cost);
-                return true;//jak sie klawiatura wysunie i kliknie sie dalej ;] change focus ?
-            }
-        });
-
         Button add_button = (Button) getActivity().findViewById(R.id.save);
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,15 +156,25 @@ public class AddOffer extends Fragment {
 
                 String s = data.getText().toString() + " " + time.getText().toString() + ":00"; //seconds :00
                 if(!name.getText().toString().equals("") && !address.getText().toString().equals("") && !description.getText().toString().equals("") && !cost.getText().toString().equals("") && !max.getText().toString().equals("") && !s.equals("")&& mLatLng !=null) {
-                    final Offer new_offer = new Offer(name.getText().toString(), address.getText().toString(), description.getText().toString(), Integer.parseInt(cost.getText().toString()), Integer.parseInt(max.getText().toString()), s, mLatLng);
 
-                    Call<Offer> query = _api.sendOffer(new_offer);
+                    Integer id = null;
+                    if(offer!=null)
+                        id = offer.getId();
+                    offer = new Offer(id, name.getText().toString(), address.getText().toString(), description.getText().toString(), Integer.parseInt(cost.getText().toString()), Integer.parseInt(max.getText().toString()), s, mLatLng);
+
+                    Call<Offer> query;
+                    if(edit){
+                        query = _api.editMyOffer(offer.getId(), offer);
+                    }
+                    else {
+                        query = _api.sendOffer(offer);
+                    }
                     query.enqueue(new Callback<Offer>() {
 
                         @Override
                         public void onResponse(Call<Offer> call, Response<Offer> response) {
                             if (response.isSuccessful()) {
-                                Snackbar.make(view, "Offer added: " + new_offer.getName(), Snackbar.LENGTH_INDEFINITE).show();
+                                Snackbar.make(view, "Offer added: " + offer.getName(), Snackbar.LENGTH_INDEFINITE).show();
                             }
                             Snackbar.make(view, "response: " + response.message(), Snackbar.LENGTH_INDEFINITE).show();
 

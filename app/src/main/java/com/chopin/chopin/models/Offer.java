@@ -53,7 +53,7 @@ public class Offer {
         Offer.l = l;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -118,8 +118,8 @@ public class Offer {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public Offer(String name, String address, String description, int cost_per_person, int max_number_people, String data, LatLng latLng) {
-        this.id = null;
+    public Offer(Integer id, String name, String address, String description, int cost_per_person, int max_number_people, String data, LatLng latLng) {
+        this.id = id;
         this.name = name;
         this.address = address;
         this.description = description;

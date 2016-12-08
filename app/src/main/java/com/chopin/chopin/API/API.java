@@ -88,7 +88,7 @@ public class API {
         Call<Offer> deleteMyOffer(@Path("offer_id") Integer offer_id);
 
         @PATCH("/api/v1/offers/{offer_id}")
-        Call<Offer> editMyOffer(@Path("offer_id") Integer offer_id);
+        Call<Offer> editMyOffer(@Path("offer_id") Integer offer_id, @Body Offer offer);
     }
 }
 

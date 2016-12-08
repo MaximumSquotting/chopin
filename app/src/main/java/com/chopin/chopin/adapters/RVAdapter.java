@@ -1,9 +1,8 @@
 package com.chopin.chopin.adapters;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -12,14 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+
 import com.chopin.chopin.API.API;
 import com.chopin.chopin.R;
-import com.chopin.chopin.fragments.EditOffer;
-import com.chopin.chopin.fragments.OfferList;
+import com.chopin.chopin.fragments.AddOffer;
 import com.chopin.chopin.models.Offer;
 import com.google.gson.Gson;
 
@@ -71,7 +68,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.OfferViewHolder> {
         final TextView offerPeople;
         final TextView offerDate;
 
-
         OfferViewHolder(final View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
@@ -104,23 +100,24 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.OfferViewHolder> {
 
                         }
                     });
-
                     Snackbar.make(view, ""+ offerList.get(getLayoutPosition()).getName() + offerList.get(getLayoutPosition()).getId(), Snackbar.LENGTH_INDEFINITE).show();
                 }
             });
 
         Button editButton = (Button) itemView.findViewById(R.id.editButton);
         editButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-                Fragment fragment = new EditOffer();
-                //fragment.setArguments(new Bundle().putStringArray("lista", offerList.get(getLayoutPosition()).parse())); //TODO to rethink if that is proper way of doing
+                Fragment fragment = new AddOffer();
+                //TODO rethink if that is proper way of doing
                 a.getIntent().putExtra("Offer", new Gson().toJson(offerList.get(getLayoutPosition())));
 
                 fragmentManager = ((AppCompatActivity)a).getSupportFragmentManager();
                 fragmentManager
                         .beginTransaction()
                         .replace(R.id.fragment_content, fragment)
+                        .addToBackStack(fragment.toString())
                         .commit();
             }
         });
