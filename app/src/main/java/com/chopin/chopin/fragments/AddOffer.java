@@ -2,6 +2,7 @@ package com.chopin.chopin.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.location.Address;
@@ -12,21 +13,22 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.chopin.chopin.API.API;
+import com.chopin.chopin.API.GoogleMapApi;
 import com.chopin.chopin.R;
 import com.chopin.chopin.models.Offer;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
@@ -34,7 +36,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -51,9 +52,8 @@ import retrofit2.Response;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class AddOffer extends Fragment {
     private API.APIInterface _api;
-
     @BindView(R.id.add_name) EditText name;
-    @BindView(R.id.add_addres) EditText address;
+    @BindView(R.id.add_addres) AutoCompleteTextView address;
     @BindView(R.id.add_description) TextView description;
     @BindView(R.id.add_max_person) TextView max;
     @BindView(R.id.add_price) TextView cost;
@@ -92,6 +92,7 @@ public class AddOffer extends Fragment {
             cal.setTime(offer.getOfferDate());
             name.setText(offer.getName());
             address.setText(offer.getAddress());
+
             description.setText(offer.getDescription());
             max.setText(Integer.toString(offer.getMax_number_of_people()));
             cost.setText(Integer.toString(offer.getCost_per_person()));
@@ -113,6 +114,7 @@ public class AddOffer extends Fragment {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
+
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -124,9 +126,11 @@ public class AddOffer extends Fragment {
 
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(getActivity(), date, myCalendar
+                DatePickerDialog d = new DatePickerDialog(getActivity(), date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+                d.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                d.show();
             }
         });
 
@@ -160,6 +164,7 @@ public class AddOffer extends Fragment {
                     Integer id = null;
                     if(offer!=null)
                         id = offer.getId();
+
                     offer = new Offer(id, name.getText().toString(), address.getText().toString(), description.getText().toString(), Integer.parseInt(cost.getText().toString()), Integer.parseInt(max.getText().toString()), s, mLatLng);
 
                     Call<Offer> query;
@@ -198,8 +203,6 @@ public class AddOffer extends Fragment {
                 }
             }
         });
-
-
     }
     private void updateLabel() {
         String myFormat = "yyyy-MM-dd"; //In which you need put here
@@ -210,109 +213,19 @@ public class AddOffer extends Fragment {
     public LatLng getLatLongFromPlace(String place) {
         try {
             Geocoder selected_place_geocoder = new Geocoder(getContext());
-            List<Address> address;
+            List<Address> addresses;
 
-            address = selected_place_geocoder.getFromLocationName(place, 5);
-
-            if (address == null) {
+            addresses = selected_place_geocoder.getFromLocationName(place, 5);
+            if (addresses == null) {
 
             } else {
-                Address location = address.get(0);
+                Address location = addresses.get(0);
                 LatLng l = new LatLng(location.getLatitude(),location.getLongitude());
                 return l;
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
-    }
-
-//TODO All code below to refactor/remove do it properly.
-//Sometimes happens that device gives location = null
-
-    public class fetchLatLongFromService extends
-            AsyncTask<Void, Void, StringBuilder> {
-        String place;
-
-
-        public fetchLatLongFromService(String place) {
-            super();
-            this.place = place;
-
-        }
-
-        @Override
-        protected void onCancelled() {
-            // TODO Auto-generated method stub
-            super.onCancelled();
-            this.cancel(true);
-        }
-
-        @Override
-        protected StringBuilder doInBackground(Void... params) {
-            // TODO Auto-generated method stub
-            try {
-                HttpURLConnection conn;
-                conn = null;
-                StringBuilder jsonResults = new StringBuilder();
-                String googleMapUrl = "http://maps.googleapis.com/maps/api/geocode/json?address="
-                        + this.place + "&sensor=false";
-
-                URL url = new URL(googleMapUrl);
-                conn = (HttpURLConnection) url.openConnection();
-                InputStreamReader in = new InputStreamReader(
-                        conn.getInputStream());
-                int read;
-                char[] buff = new char[1024];
-                while ((read = in.read(buff)) != -1) {
-                    jsonResults.append(buff, 0, read);
-                }
-                String a = "";
-                return jsonResults;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-
-        }
-
-        @Override
-        protected void onPostExecute(StringBuilder result) {
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
-            try {
-                JSONObject jsonObj = new JSONObject(result.toString());
-                JSONArray resultJsonArray = jsonObj.getJSONArray("results");
-
-                // Extract the Place descriptions from the results
-                // resultList = new ArrayList<String>(resultJsonArray.length());
-
-                JSONObject before_geometry_jsonObj = resultJsonArray
-                        .getJSONObject(0);
-
-                JSONObject geometry_jsonObj = before_geometry_jsonObj
-                        .getJSONObject("geometry");
-
-                JSONObject location_jsonObj = geometry_jsonObj
-                        .getJSONObject("location");
-
-                String lat_helper = location_jsonObj.getString("lat");
-                double lat = Double.valueOf(lat_helper);
-
-
-                String lng_helper = location_jsonObj.getString("lng");
-                double lng = Double.valueOf(lng_helper);
-
-
-                LatLng point = new LatLng(lat, lng);
-
-
-            } catch (JSONException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-
-            }
-        }
     }
 }
