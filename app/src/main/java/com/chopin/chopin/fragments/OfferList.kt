@@ -3,8 +3,10 @@ package com.chopin.chopin.fragments
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +24,8 @@ class OfferList : Fragment() {
     private var _api: API.APIInterface? = null
     private var offers: ArrayList<Offer>? = null
     private var mRecyclerView: RecyclerView? = null
+    private var swipe:SwipeRefreshLayout? = null
+    private var adapter:OfferListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +39,15 @@ class OfferList : Fragment() {
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        get()
+        swipe?.setOnRefreshListener({
+            Log.d("onRefresh", "calling get()")
+            get()
+            adapter!!.notifyDataSetChanged()
+            swipe!!.setRefreshing(false)
+        })
+    }
+    fun get(){
         val query = _api!!.allOffers
         offers = ArrayList<Offer>()
 
@@ -43,7 +56,7 @@ class OfferList : Fragment() {
             override fun onResponse(call: Call<List<Offer>>, response: Response<List<Offer>>) {
                 if (response.isSuccessful) {
                     offers!!.addAll(response.body())
-                    val adapter = OfferListAdapter(offers, activity)
+                    adapter = OfferListAdapter(offers, activity)
                     mRecyclerView!!.adapter = adapter
                 }
             }
