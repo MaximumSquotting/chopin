@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener
     {
     private android.support.v4.app.FragmentManager fragmentManager;
-    private API.APIInterface apiInterface;
-    private User user;
     private boolean login = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +42,11 @@ public class MainActivity extends AppCompatActivity
         Bundle extras = getIntent().getExtras();
         if(extras != null)
             login = extras.getBoolean("login");
-        //if(!login)
-            //startActivity(new Intent(this,LoginActivity.class));
+        if(!login)
+            startActivity(new Intent(this,LoginActivity.class));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        apiInterface = API.getClient();
-        userAuthorization();//TODO if there will be users add parameter
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -78,30 +73,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-
-    private void userAuthorization(){
-        user = new User();
-        Call<User> call = apiInterface.getToken(user.getEmail(), user.getPassword());
-        call.enqueue(new Callback<User>() {
-
-            @Override
-            public void onResponse(Call<User> call, retrofit2.Response<User> response) {
-                String uid = response.headers().get("uid");
-                String client = response.headers().get("client");
-                API.token = response.headers().get("access-token");
-                API.client = client;
-                API.uid = uid;
-                TextView name = (TextView) findViewById(R.id.full_name);
-                TextView email = (TextView) findViewById(R.id.email);
-                user = response.body();
-                name.setText(user.getName());
-                email.setText(user.getEmail());
-            }
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-            }
-        });
-    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -127,8 +98,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @SuppressWarnings("StatementWithEmptyBody")
+    @SuppressWarnings("NewApi")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();

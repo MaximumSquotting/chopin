@@ -21,7 +21,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:hint="Email" />
+        android:hint="Email"
+        android:text="user1@example.com" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -32,7 +33,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/password"
-        android:hint="Password" />
+        android:hint="Password"
+        android:text="qweasdzxc" />
 
     <Button
         android:text="Login"
