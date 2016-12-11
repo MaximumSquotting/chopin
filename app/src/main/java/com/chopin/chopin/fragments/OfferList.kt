@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.chopin.chopin.API.API
 import com.chopin.chopin.R
+import com.chopin.chopin.adapters.OfferListAdapter
 import com.chopin.chopin.adapters.RVAdapter
 import com.chopin.chopin.models.Offer
 import retrofit2.Call
@@ -42,7 +43,7 @@ class OfferList : Fragment() {
             override fun onResponse(call: Call<List<Offer>>, response: Response<List<Offer>>) {
                 if (response.isSuccessful) {
                     offers!!.addAll(response.body())
-                    val adapter = RVAdapter(offers, activity)
+                    val adapter = OfferListAdapter(offers, activity)
                     mRecyclerView!!.adapter = adapter
                 }
             }
