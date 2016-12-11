@@ -1,5 +1,6 @@
 package com.chopin.chopin.activities;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -34,11 +35,18 @@ public class MainActivity extends AppCompatActivity
     private android.support.v4.app.FragmentManager fragmentManager;
     private API.APIInterface apiInterface;
     private User user;
-
+    private boolean login = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null)
+            login = extras.getBoolean("login");
+        //if(!login)
+            //startActivity(new Intent(this,LoginActivity.class));
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         apiInterface = API.getClient();
@@ -69,6 +77,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
 
     private void userAuthorization(){
         user = new User();
