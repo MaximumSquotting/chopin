@@ -10,7 +10,6 @@ import com.google.android.gms.maps.model.LatLng;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class Offer {
@@ -23,16 +22,16 @@ public class Offer {
     private int max_number_of_people;
     private double latitude = 1;
     private double longitude = 1;
-    Date OfferDate;
+    private Date offer_date;
 
     public Date getOfferDate() {
-        return OfferDate;
+        return offer_date;
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void setOfferDate(String data) {
-        OfferDate = parseData(data);
+    public void setOffer_date(String data) {
+        offer_date = parseData(data);
     }
     @RequiresApi(api = Build.VERSION_CODES.N)
     private Date parseData(String data){
@@ -127,7 +126,7 @@ public class Offer {
         this.max_number_of_people = max_number_people;
         this.latitude = latLng.latitude;
         this.longitude = latLng.longitude;
-        this.OfferDate = parseData(data);
+        this.offer_date = parseData(data);
     }
 
     Offer() {

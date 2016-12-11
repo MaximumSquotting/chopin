@@ -3,7 +3,6 @@ package com.chopin.chopin.adapters;
 import android.app.Activity;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,17 +15,12 @@ import android.support.v4.app.Fragment;
 
 import com.chopin.chopin.API.API;
 import com.chopin.chopin.R;
-import com.chopin.chopin.fragments.AddOffer;
 import com.chopin.chopin.fragments.PayFragment;
 import com.chopin.chopin.models.Offer;
-import com.google.gson.Gson;
 
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.OfferViewHolder> {
     private static API.APIInterface _api;
