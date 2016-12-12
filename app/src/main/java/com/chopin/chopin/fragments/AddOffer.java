@@ -23,6 +23,7 @@ import android.widget.TimePicker;
 
 import com.chopin.chopin.API.API;
 import com.chopin.chopin.R;
+import com.chopin.chopin.activities.MainActivity;
 import com.chopin.chopin.models.Offer;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
@@ -89,7 +90,6 @@ public class AddOffer extends Fragment {
 
             edit = true;
         }else edit = false;
-
         return view;
     }
 

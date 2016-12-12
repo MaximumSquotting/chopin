@@ -25,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.email) EditText email;
     @BindView(R.id.password) EditText password;
     @BindView(R.id.loginButton) Button loginButton;
+    @BindView(R.id.createNewUser) Button signButton;
+
     private API.APIInterface apiInterface;
     private User user;
     Context context = null;
@@ -43,11 +45,21 @@ public class LoginActivity extends AppCompatActivity {
                 userAuthorization();
             }
         });
+        signButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signin();
+            }
+        });
     }
     private void successfulLogin() {
         Intent main = new Intent(this, MainActivity.class);
         main.putExtra("login", true);
         startActivity(main);
+        finish();
+    }
+    private void signin(){
+        startActivity(new Intent(this, SignInActivity.class));
         finish();
     }
 

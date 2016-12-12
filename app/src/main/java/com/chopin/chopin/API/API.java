@@ -20,6 +20,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -89,6 +90,15 @@ public class API {
 
         @PATCH("/api/v1/offers/{offer_id}")
         Call<Offer> editMyOffer(@Path("offer_id") Integer offer_id, @Body Offer offer);
+
+        @FormUrlEncoded
+        @POST("/api/v1/auth/")
+        Call<User> createNewUser(@Field("email") String email,
+                                 @Field("password") String password,
+                                 @Field("password_confirmation") String password_confirmation,
+                                 @Field("confirm_success_url") String c,
+                                 @Field("address") String address,
+                                 @Field("name") String name);
     }
 }
 
