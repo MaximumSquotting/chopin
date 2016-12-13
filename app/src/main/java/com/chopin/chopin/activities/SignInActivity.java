@@ -1,7 +1,7 @@
 package com.chopin.chopin.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,14 +10,10 @@ import android.widget.Toast;
 
 import com.chopin.chopin.API.API;
 import com.chopin.chopin.R;
-import com.chopin.chopin.models.Offer;
 import com.chopin.chopin.models.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -66,12 +62,10 @@ public class SignInActivity extends AppCompatActivity {
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                                //user = new Gson().fromJson(response.raw().request().body().toString(), User.class);
-                                Toast.makeText(getBaseContext(), s, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getBaseContext(), s, Toast.LENGTH_SHORT).show();
                                 finish();
                             }
                             Log.v("response", "response" + response.raw().request().body());
-
                         }
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {

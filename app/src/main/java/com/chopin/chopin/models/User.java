@@ -84,10 +84,4 @@ public class User {
         this.name = name;
         this.address = address;
     }
-
-    public User() {
-        this.email = "user1@example.com";
-        this.password = "qweasdzxc";
-        this.address = "dupa";
-    }
 }

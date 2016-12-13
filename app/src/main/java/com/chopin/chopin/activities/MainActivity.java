@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity
         Bundle extras = getIntent().getExtras();
         if (extras != null)
             login = extras.getBoolean("login");
-        if (!login)
+        if (!login){
             startActivity(new Intent(this, LoginActivity.class));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity
                     .addApi(LocationServices.API)
                     .build();
         }
+    }
     }
 
     @Override
@@ -199,6 +200,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            //TODO new fragment user settings
             return true;
         }
         return super.onOptionsItemSelected(item);
