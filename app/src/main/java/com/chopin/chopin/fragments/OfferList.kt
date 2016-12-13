@@ -20,7 +20,7 @@ import java.util.*
 class OfferList : Fragment() {
     private var offers: ArrayList<Offer>? = null
     val swipe: SwipeRefreshLayout? by bindView(R.id.swipe)
-    internal val mRecyclerView: RecyclerView by bindView(R.id.offer_list)
+    internal val mRecyclerView: RecyclerView by bindView(R.id.list)
     private var adapter:OfferListAdapter? = null
     private var TAG: String = " OfferList";
     private var connectionHandler: ConnectionHandler = ConnectionHandler()
@@ -35,7 +35,7 @@ class OfferList : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val v = inflater!!.inflate(R.layout.fragment_offer_list, container, false)
+        val v = inflater!!.inflate(R.layout.fragment_list, container, false)
         ButterKnife.bind(this, v)
 
         offers = connectionHandler.allOfferFromServer

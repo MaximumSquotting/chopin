@@ -37,6 +37,12 @@ public class ConnectionHandler {
         return offers;
     }
 
+    public ArrayList<Offer> getChippedOffersFromServer()
+    {
+        queryServer(_api.getChipedOffers());
+        return offers;
+    }
+
     private void queryServer(Call<List<Offer>> query)
     {
         query.enqueue(new Callback<List<Offer>>() {
