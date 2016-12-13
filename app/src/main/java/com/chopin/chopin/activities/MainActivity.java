@@ -1,8 +1,11 @@
 package com.chopin.chopin.activities;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -12,38 +15,49 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.chopin.chopin.API.API;
 import com.chopin.chopin.R;
 import com.chopin.chopin.fragments.AddOffer;
 import com.chopin.chopin.fragments.FragmentWithMap;
 import com.chopin.chopin.fragments.MyChippedList;
 import com.chopin.chopin.fragments.MyOfferList;
 import com.chopin.chopin.fragments.OfferList;
-import com.chopin.chopin.models.User;
-
-import retrofit2.Call;
-import retrofit2.Callback;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 public class MainActivity extends AppCompatActivity
-    implements NavigationView.OnNavigationItemSelectedListener
-    {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
+    private Location mCurrentLocation;
+    private GoogleApiClient mGoogleApiClient;
+    private static final String TAG = "MainActivity";
+
+    public Location getCurrentLocation() {
+        return mCurrentLocation;
+    }
+
+
     private android.support.v4.app.FragmentManager fragmentManager;
     private boolean login = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         Bundle extras = getIntent().getExtras();
-        if(extras != null)
+        if (extras != null)
             login = extras.getBoolean("login");
-        if(!login)
-            startActivity(new Intent(this,LoginActivity.class));
+        if (!login)
+            startActivity(new Intent(this, LoginActivity.class));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -71,11 +85,47 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+        try {
+            mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            if (mCurrentLocation != null) {
+                Toast.makeText(this, "" + mCurrentLocation.getLongitude() + " "
+                 + mCurrentLocation.getLatitude(), Toast.LENGTH_SHORT).show();
+
+            }
+        }catch(SecurityException e)
+        {
+            Log.v(TAG, "Location problem ");
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.v(TAG, "Connection to Google Api Suspended");
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.e(TAG, "Connection to Google Api Service Failed");
     }
 
     @Override
     protected void onStart() {
+        mGoogleApiClient.connect();
         super.onStart();
+
         Fragment fragment;
         fragment = new OfferList();
 
@@ -84,6 +134,12 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .replace(R.id.fragment_content, fragment)
                 .commit();
+    }
+
+    @Override
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
     }
 
     @Override
@@ -104,7 +160,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         Fragment fragment = null;
-        switch (id){
+        switch (id) {
             case R.id.nav_OfferList:
                 fragment = new OfferList();
                 break;
@@ -118,7 +174,7 @@ public class MainActivity extends AppCompatActivity
                 fragment = new MyChippedList();
                 break;
             case R.id.nav_MyMap:
-               fragment = new FragmentWithMap();
+                fragment = new FragmentWithMap();
         }
 
         fragmentManager = getSupportFragmentManager();

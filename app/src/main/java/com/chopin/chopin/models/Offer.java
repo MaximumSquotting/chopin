@@ -2,6 +2,7 @@ package com.chopin.chopin.models;
 
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
+import android.location.Location;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
@@ -44,6 +45,7 @@ public class Offer {
         }
         return null;
     }
+
     public static ArrayList<Offer> getL() {
         return l;
     }
@@ -114,6 +116,14 @@ public class Offer {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public Location getLocation()
+    {
+        Location location = new Location("");
+        location.setLatitude(latitude);
+        location.setLongitude(longitude);
+        return location;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

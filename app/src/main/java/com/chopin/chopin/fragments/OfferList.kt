@@ -1,7 +1,6 @@
 package com.chopin.chopin.fragments
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
@@ -12,25 +11,25 @@ import android.view.View
 import android.view.ViewGroup
 import bindView
 import butterknife.ButterKnife
-import com.chopin.chopin.API.API
+import com.chopin.chopin.ConnectionHandler
 import com.chopin.chopin.R
 import com.chopin.chopin.adapters.OfferListAdapter
 import com.chopin.chopin.models.Offer
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.*
 
 class OfferList : Fragment() {
-    private var _api: API.APIInterface? = null
     private var offers: ArrayList<Offer>? = null
     val swipe: SwipeRefreshLayout? by bindView(R.id.swipe)
     internal val mRecyclerView: RecyclerView by bindView(R.id.offer_list)
     private var adapter:OfferListAdapter? = null
+    private var TAG: String = " OfferList";
+    private var connectionHandler: ConnectionHandler = ConnectionHandler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _api = API.getClient()
+
+        offers = connectionHandler.allOfferFromServer
+        adapter = OfferListAdapter(offers, activity)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -38,43 +37,41 @@ class OfferList : Fragment() {
         // Inflate the layout for this fragment
         val v = inflater!!.inflate(R.layout.fragment_offer_list, container, false)
         ButterKnife.bind(this, v)
+
+        offers = connectionHandler.allOfferFromServer
+        adapter!!.notifyDataSetChanged()
         return v;
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        mRecyclerView!!.setHasFixedSize(true)
+        val mLayoutManager = LinearLayoutManager(this.context)
+        mRecyclerView!!.layoutManager = mLayoutManager
+        mRecyclerView!!.adapter = adapter
+        adapter!!.notifyDataSetChanged()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        offers = connectionHandler.allOfferFromServer
+        adapter!!.notifyDataSetChanged()
+    }
+
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        get()
+        offers = connectionHandler.allOfferFromServer
+        adapter!!.notifyDataSetChanged()
 
         swipe?.setOnRefreshListener({
             Log.d("onRefresh", "calling get()")
-            get()
+            offers = connectionHandler.allOfferFromServer
             adapter!!.notifyDataSetChanged()
             swipe!!.isRefreshing = false
         })
 
     }
-    fun get(){
-        val query = _api!!.allOffers
-        offers = ArrayList<Offer>()
 
-        query.enqueue(object : Callback<List<Offer>> {
-
-            override fun onResponse(call: Call<List<Offer>>, response: Response<List<Offer>>) {
-                if (response.isSuccessful) {
-                    offers!!.addAll(response.body())
-                    adapter = OfferListAdapter(offers, activity)
-                    mRecyclerView!!.adapter = adapter
-                }
-            }
-
-            override fun onFailure(call: Call<List<Offer>>, t: Throwable) {
-                Snackbar.make(view!!, "Connection error", Snackbar.LENGTH_INDEFINITE).show()
-            }
-        })
-        mRecyclerView!!.setHasFixedSize(true)
-
-        val mLayoutManager = LinearLayoutManager(this.context)
-        mRecyclerView!!.layoutManager = mLayoutManager
-    }
 }// Required empty public constructor
 
 
