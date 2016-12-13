@@ -10,19 +10,30 @@ import android.widget.Toast;
 
 import com.chopin.chopin.API.API;
 import com.chopin.chopin.R;
+import com.chopin.chopin.models.Offer;
 import com.chopin.chopin.models.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignInActivity extends AppCompatActivity {
 
     @BindView(R.id.email) EditText email;
     @BindView(R.id.password) EditText password;
     @BindView(R.id.confirmation) EditText pass_confirm;
-    @BindView(R.id.signin) Button signin;
+    @BindView(R.id.signin) Button signButton;
     private API.APIInterface apiInterface;
     private User user;
 
@@ -33,28 +44,39 @@ public class SignInActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         apiInterface = API.getClient();
 
-        signin.setOnClickListener(new View.OnClickListener() {
+        signButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if(pass_confirm.getText().toString().equals(password.getText().toString())){
-                Call<User> call = apiInterface.createNewUser(email.getText().toString(), password.getText().toString(),pass_confirm.getText().toString(),"/","s","ss");
-                call.enqueue(new Callback<User>() {
+                    user = new User(null, email.getText().toString(), password.getText().toString(),"s","ss");
+                    Call<ResponseBody> call = apiInterface.createNewUser(user);
+                    call.enqueue(new Callback<ResponseBody>() {
 
-                    @Override
-                    public void onResponse(Call<User> call, retrofit2.Response<User> response) {
-                        if(response.isSuccessful()) {
-                            user = response.body();
-                            Toast.makeText(getBaseContext(), user.getEmail(), Toast.LENGTH_SHORT).show();
-                            finish();
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if(response.isSuccessful()) {
+                                String s = null;
+                                try {
+                                    s = response.body().string();
+                                    JsonParser parser = new JsonParser();
+                                    JsonObject o = parser.parse(s).getAsJsonObject();
+                                    user = new Gson().fromJson(o.getAsJsonObject("data"), User.class);
+                                    System.out.print("s");
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                //user = new Gson().fromJson(response.raw().request().body().toString(), User.class);
+                                Toast.makeText(getBaseContext(), s, Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                            Log.v("response", "response" + response.raw().request().body());
+
                         }
-                        Log.d("response", "response" + response.body());
-
-                    }
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        Toast.makeText(getBaseContext(), "Connection problem", Toast.LENGTH_SHORT).show();
-                    }
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Toast.makeText(getBaseContext(), "Connection problem", Toast.LENGTH_SHORT).show();
+                        }
                 });
                 }else{
                     Toast.makeText(getBaseContext(), "Password and password confirmation are not equals", Toast.LENGTH_SHORT).show();

@@ -12,6 +12,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -91,14 +92,8 @@ public class API {
         @PATCH("/api/v1/offers/{offer_id}")
         Call<Offer> editMyOffer(@Path("offer_id") Integer offer_id, @Body Offer offer);
 
-        @FormUrlEncoded
         @POST("/api/v1/auth/")
-        Call<User> createNewUser(@Field("email") String email,
-                                 @Field("password") String password,
-                                 @Field("password_confirmation") String password_confirmation,
-                                 @Field("confirm_success_url") String c,
-                                 @Field("address") String address,
-                                 @Field("name") String name);
+        Call<ResponseBody> createNewUser(@Body User user);
     }
 }
 
