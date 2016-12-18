@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.createNewUser) Button signButton;
 
     private API.APIInterface apiInterface;
-    private User user;
+    static public User user;
     Context context = null;
 
     @Override

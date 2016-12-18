@@ -1,6 +1,9 @@
 package com.chopin.chopin.models;
 
-public class User {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class User implements Parcelable{
     private Integer id;
     private String email;
     private String password;
@@ -83,5 +86,19 @@ public class User {
         this.password_confirmation = password;
         this.name = name;
         this.address = address;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeStringArray(new String[]{
+                this.id.toString(),
+                this.name,
+                this.email
+        });
     }
 }

@@ -27,6 +27,7 @@ import com.chopin.chopin.fragments.FragmentWithMap;
 import com.chopin.chopin.fragments.MyChippedList;
 import com.chopin.chopin.fragments.MyOfferList;
 import com.chopin.chopin.fragments.OfferList;
+import com.chopin.chopin.fragments.UserSettingsLayout;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -200,8 +201,12 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            //TODO new fragment user settings
-            return true;
+            fragmentManager = getSupportFragmentManager();
+            fragmentManager
+                    .beginTransaction()
+                    .addToBackStack(UserSettingsLayout.class.toString())
+                    .replace(R.id.fragment_content, new UserSettingsLayout())
+                    .commit();
         }
         return super.onOptionsItemSelected(item);
     }
