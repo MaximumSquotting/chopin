@@ -38,7 +38,14 @@ public class UserSettingsLayout extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(getActivity());
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_user_settings_layout, container, false);
+
+        ButterKnife.bind(this, v);
         email.setText(u.getEmail());
         name.setText(u.getName());
         address.setText(u.getAddress());
@@ -55,11 +62,6 @@ public class UserSettingsLayout extends Fragment {
 
             }
         });
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_user_settings_layout, container, false);
+        return v;
     }
  }

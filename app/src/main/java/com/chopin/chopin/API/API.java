@@ -53,7 +53,7 @@ public class API {
                     .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                     .create();
 
-            String url = "http://192.168.1.24:3000";
+            String url = "http://192.168.0.92:3000";
             Retrofit client = new Retrofit.Builder()
                     .baseUrl(url)
                     .addConverterFactory(GsonConverterFactory.create(gson))

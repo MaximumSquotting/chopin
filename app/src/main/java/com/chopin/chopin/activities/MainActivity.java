@@ -39,12 +39,9 @@ public class MainActivity extends AppCompatActivity
     private Location mCurrentLocation;
     private GoogleApiClient mGoogleApiClient;
     private static final String TAG = "MainActivity";
-
     public Location getCurrentLocation() {
         return mCurrentLocation;
     }
-
-
     private android.support.v4.app.FragmentManager fragmentManager;
     private boolean login = false;
 
@@ -57,9 +54,9 @@ public class MainActivity extends AppCompatActivity
         Bundle extras = getIntent().getExtras();
         if (extras != null)
             login = extras.getBoolean("login");
-        if (!login){
+        if (!login) {
             startActivity(new Intent(this, LoginActivity.class));
-
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -94,7 +91,6 @@ public class MainActivity extends AppCompatActivity
                     .addApi(LocationServices.API)
                     .build();
         }
-    }
     }
 
     @Override
@@ -140,7 +136,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onStop() {
-        mGoogleApiClient.disconnect();
+        if(mGoogleApiClient != null)
+            mGoogleApiClient.disconnect();
         super.onStop();
     }
 
@@ -200,6 +197,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
         if (id == R.id.action_settings) {
             fragmentManager = getSupportFragmentManager();
             fragmentManager

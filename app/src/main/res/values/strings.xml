@@ -19,6 +19,7 @@
     <string name="offer_how_many_hint">How many people can you serve?</string>
     <string name="offer_address">Address</string>
 
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">Sign in</string>
