@@ -43,20 +43,12 @@ public class MainActivity extends AppCompatActivity
         return mCurrentLocation;
     }
     private android.support.v4.app.FragmentManager fragmentManager;
-    private boolean login = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        Bundle extras = getIntent().getExtras();
-        if (extras != null)
-            login = extras.getBoolean("login");
-        if (!login) {
-            startActivity(new Intent(this, LoginActivity.class));
-        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -64,15 +56,7 @@ public class MainActivity extends AppCompatActivity
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-                Fragment fragment;
-                fragment = new AddOffer();
-
-                fragmentManager = getSupportFragmentManager();
-                fragmentManager
-                        .beginTransaction()
-                        .replace(R.id.fragment_content, fragment)
-                        .addToBackStack(fragment.toString())
-                        .commit();
+                changeToFragment(new AddOffer());
             }
         });
 
@@ -124,14 +108,7 @@ public class MainActivity extends AppCompatActivity
         mGoogleApiClient.connect();
         super.onStart();
 
-        Fragment fragment;
-        fragment = new OfferList();
-
-        fragmentManager = getSupportFragmentManager();
-        fragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_content, fragment)
-                .commit();
+        changeToFragment(new OfferList());
     }
 
     @Override
@@ -175,13 +152,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_MyMap:
                 fragment = new FragmentWithMap();
         }
-
-        fragmentManager = getSupportFragmentManager();
-        fragmentManager
-                .beginTransaction()
-                .addToBackStack(fragment.toString())
-                .replace(R.id.fragment_content, fragment)
-                .commit();
+        changeToFragment(fragment);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -199,13 +170,16 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            fragmentManager = getSupportFragmentManager();
-            fragmentManager
-                    .beginTransaction()
-                    .addToBackStack(UserSettingsLayout.class.toString())
-                    .replace(R.id.fragment_content, new UserSettingsLayout())
-                    .commit();
+            changeToFragment(new UserSettingsLayout());
         }
         return super.onOptionsItemSelected(item);
+    }
+    public void changeToFragment(Fragment f){
+        fragmentManager = getSupportFragmentManager();
+        fragmentManager
+                .beginTransaction()
+                .addToBackStack(f.toString())
+                .replace(R.id.fragment_content, f)
+                .commit();
     }
 }
