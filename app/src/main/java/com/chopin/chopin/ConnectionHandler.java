@@ -22,7 +22,7 @@ public class ConnectionHandler {
     public ConnectionHandler()
     {
         _api = API.getClient();
-        offers = new ArrayList<Offer>();
+        offers = new ArrayList<>();
     }
 
     public ArrayList<Offer> getAllOfferFromServer()

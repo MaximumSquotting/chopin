@@ -10,6 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:text="Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView" />
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -17,6 +23,12 @@
             android:text="Name"
             android:ems="10"
             android:id="@+id/userName" />
+
+        <TextView
+            android:text="Address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2" />
 
         <EditText
             android:layout_width="match_parent"
@@ -26,6 +38,12 @@
             android:ems="10"
             android:id="@+id/userAddress" />
 
+        <TextView
+            android:text="email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3" />
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,14 +51,6 @@
             android:ems="10"
             android:id="@+id/userEmail"
             android:hint="email" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/userCurrentPassword"
-            android:hint="current password" />
 
         <EditText
             android:layout_width="match_parent"

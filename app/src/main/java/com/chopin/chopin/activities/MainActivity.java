@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.chopin.chopin.API.API;
 import com.chopin.chopin.R;
 import com.chopin.chopin.fragments.AddOffer;
 import com.chopin.chopin.fragments.FragmentWithMap;
@@ -31,6 +32,10 @@ import com.chopin.chopin.fragments.UserSettingsLayout;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -169,8 +174,30 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            changeToFragment(new UserSettingsLayout());
+        switch(id){
+            case R.id.action_settings:
+                changeToFragment(new UserSettingsLayout());
+                break;
+            case R.id.logout:
+                final API.APIInterface _api = API.getClient();
+                Call<ResponseBody> call = _api.logout();
+                call.enqueue(new Callback<ResponseBody>() {
+
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            API.client = null;
+                            API.uid = null;
+                            API.token = null;
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(getBaseContext(), "Connection problem", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
         }
         return super.onOptionsItemSelected(item);
     }

@@ -14,9 +14,15 @@ import android.widget.Toast;
 import com.chopin.chopin.API.API;
 import com.chopin.chopin.R;
 import com.chopin.chopin.models.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -60,16 +66,16 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void signin(){
         startActivity(new Intent(this, SignInActivity.class));
-        finish();
+        //finish();
     }
 
     private void userAuthorization(){
         user = new User(email.getText().toString(),password.getText().toString());
-        Call<User> call = apiInterface.getToken(user.getEmail(), user.getPassword());
-        call.enqueue(new Callback<User>() {
+        Call<ResponseBody> call = apiInterface.getToken(user.getEmail(), user.getPassword());
+        call.enqueue(new Callback<ResponseBody>() {
 
             @Override
-            public void onResponse(Call<User> call, retrofit2.Response<User> response) {
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 String uid = response.headers().get("uid");
                 String client = response.headers().get("client");
                 String token = response.headers().get("access-token");
@@ -77,16 +83,24 @@ public class LoginActivity extends AppCompatActivity {
                 if(uid != null)    API.uid = uid;
                 if(token !=null)   API.token = token;
 
+                String s = null;
                 if(client != null){
-                    user = response.body();
-                    successfulLogin();
+                    try {
+                        s = response.body().string();
+                        JsonParser parser = new JsonParser();
+                        JsonObject o = parser.parse(s).getAsJsonObject();
+                        user = new Gson().fromJson(o.getAsJsonObject("data"), User.class);
+                        successfulLogin();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 else {
                     Toast.makeText(getBaseContext(), "Invalid login or password", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(context, "Connection problem", Toast.LENGTH_SHORT).show();
             }
         });

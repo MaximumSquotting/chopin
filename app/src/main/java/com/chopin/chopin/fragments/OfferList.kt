@@ -22,7 +22,6 @@ class OfferList : Fragment() {
     val swipe: SwipeRefreshLayout? by bindView(R.id.swipe)
     internal val mRecyclerView: RecyclerView by bindView(R.id.list)
     private var adapter:OfferListAdapter? = null
-    private var TAG: String = " OfferList";
     private var connectionHandler: ConnectionHandler = ConnectionHandler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,14 +33,9 @@ class OfferList : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        val v = inflater!!.inflate(R.layout.fragment_list, container, false)
-        ButterKnife.bind(this, v)
-
-        offers = connectionHandler.allOfferFromServer
-        adapter!!.notifyDataSetChanged()
-        return v;
+        return inflater!!.inflate(R.layout.fragment_list, container, false)
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -56,11 +50,13 @@ class OfferList : Fragment() {
     override fun onResume() {
         super.onResume()
         offers = connectionHandler.allOfferFromServer
+        adapter = OfferListAdapter(offers, activity)
         adapter!!.notifyDataSetChanged()
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         offers = connectionHandler.allOfferFromServer
+        adapter = OfferListAdapter(offers, activity)
         adapter!!.notifyDataSetChanged()
 
         swipe?.setOnRefreshListener({

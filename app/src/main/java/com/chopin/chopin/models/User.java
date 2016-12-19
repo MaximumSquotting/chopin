@@ -12,6 +12,28 @@ public class User implements Parcelable{
     private String address;
     private String confirm_success_url = "/";
 
+    protected User(Parcel in) {
+        id = in.readInt();
+        email = in.readString();
+        password = in.readString();
+        password_confirmation = in.readString();
+        name = in.readString();
+        address = in.readString();
+        confirm_success_url = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
     public String getPassword_confirmation() {
         return password_confirmation;
     }
@@ -83,6 +105,14 @@ public class User implements Parcelable{
         this.id = id;
         this.email = email;
         this.password = password;
+        this.password_confirmation = password;
+        this.name = name;
+        this.address = address;
+    }
+    public User(String name, String email, String address) {
+        this.id = null;
+        this.email = email;
+        this.password = null;
         this.password_confirmation = password;
         this.name = name;
         this.address = address;

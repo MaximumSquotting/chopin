@@ -24,6 +24,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public class API {
@@ -78,7 +79,7 @@ public class API {
 
         @FormUrlEncoded
         @POST("/api/v1/auth/sign_in/")
-        Call<User> getToken(@Field("email") String email, @Field("password") String password);
+        Call<ResponseBody> getToken(@Field("email") String email, @Field("password") String password);
 
         @GET("/api/v1/offers/chipped_in")
         Call<List<Offer>> getChipedOffers();
@@ -94,6 +95,16 @@ public class API {
 
         @POST("/api/v1/auth/")
         Call<ResponseBody> createNewUser(@Body User user);
+
+        @FormUrlEncoded
+        @PUT("/api/v1/auth/password/")
+        Call<ResponseBody> resetPassword(@Field("password") String password,
+                                         @Field("password_confirmation") String password_confirmation);
+        @PUT("/api/v1/auth/")
+        Call<User> resetUserData(@Body User user);
+
+        @DELETE("/api/v1/auth/sign_out")
+        Call<ResponseBody> logout();
     }
 }
 
