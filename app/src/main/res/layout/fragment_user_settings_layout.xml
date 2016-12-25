@@ -75,7 +75,7 @@
             android:id="@+id/updateName" />
 
         <Button
-            android:text="Reset Password"
+            android:text="Update Password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/resetPassword" />

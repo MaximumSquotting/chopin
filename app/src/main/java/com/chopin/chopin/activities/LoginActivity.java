@@ -1,14 +1,11 @@
 package com.chopin.chopin.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chopin.chopin.API.API;
@@ -28,14 +25,16 @@ import retrofit2.Callback;
 
 public class LoginActivity extends AppCompatActivity {
 
+
     @BindView(R.id.email) EditText email;
     @BindView(R.id.password) EditText password;
     @BindView(R.id.loginButton) Button loginButton;
     @BindView(R.id.createNewUser) Button signButton;
+    @BindView(R.id.passwordReminder) Button passReset;
 
+    private android.support.v4.app.FragmentManager fragmentManager;
     private API.APIInterface apiInterface;
     static public User user;
-    Context context = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         apiInterface = API.getClient();
-        context = getApplicationContext();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +55,12 @@ public class LoginActivity extends AppCompatActivity {
                 signin();
             }
         });
+        passReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                remindPassword();
+            }
+        });
     }
     private void successfulLogin() {
         Intent main = new Intent(this, MainActivity.class);
@@ -67,6 +71,9 @@ public class LoginActivity extends AppCompatActivity {
     private void signin(){
         startActivity(new Intent(this, SignInActivity.class));
         //finish();
+    }
+    private  void remindPassword(){
+        startActivity(new Intent(this, reset_password.class));
     }
 
     private void userAuthorization(){
@@ -101,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(context, "Connection problem", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Connection problem", Toast.LENGTH_SHORT).show();
             }
         });
     }

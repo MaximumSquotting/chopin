@@ -54,7 +54,7 @@ public class API {
                     .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                     .create();
 
-            String url = "http://192.168.0.92:3000";
+            String url = "http://192.168.1.233:3000";
             Retrofit client = new Retrofit.Builder()
                     .baseUrl(url)
                     .addConverterFactory(GsonConverterFactory.create(gson))
@@ -105,6 +105,10 @@ public class API {
 
         @DELETE("/api/v1/auth/sign_out")
         Call<ResponseBody> logout();
+
+        @FormUrlEncoded
+        @POST ("/api/v1/auth/password/")
+        Call<ResponseBody> forgotenPassword(@Field("email") String email, @Field("redirect_url") String url);
     }
 }
 
