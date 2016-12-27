@@ -1,6 +1,7 @@
 package com.chopin.chopin.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,9 +23,9 @@ import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
-
 
     @BindView(R.id.email) EditText email;
     @BindView(R.id.password) EditText password;
@@ -42,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         apiInterface = API.getClient();
+        loginWithToken();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void successfulLogin() {
         Intent main = new Intent(this, MainActivity.class);
-        main.putExtra("login", true);
         startActivity(main);
         finish();
     }
@@ -78,32 +79,42 @@ public class LoginActivity extends AppCompatActivity {
 
     private void userAuthorization(){
         user = new User(email.getText().toString(),password.getText().toString());
+
+        final SharedPreferences settings = getSharedPreferences("pref",MODE_PRIVATE);
         Call<ResponseBody> call = apiInterface.getToken(user.getEmail(), user.getPassword());
         call.enqueue(new Callback<ResponseBody>() {
 
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                String uid = response.headers().get("uid");
-                String client = response.headers().get("client");
-                String token = response.headers().get("access-token");
-                if(client != null) API.client = client;
-                if(uid != null)    API.uid = uid;
-                if(token !=null)   API.token = token;
+                String uid = response.raw().header("uid");
+                String client = response.raw().header("client");
+                String token = response.raw().header("access-token");
+                SharedPreferences.Editor editor = settings.edit();
 
-                String s = null;
-                if(client != null){
+                if(client != null) {
+                    API.client = client;
+                    editor.putString("client", client);
+                }
+                if(uid != null){
+                    API.uid = uid;
+                    editor.putString("uid", uid);
+                }
+                if(token !=null){
+                    API.token = token;
+                    editor.putString("access_token", token);
+                }
+                editor.commit();
+
+                if(response.isSuccessful()) {
                     try {
-                        s = response.body().string();
-                        JsonParser parser = new JsonParser();
-                        JsonObject o = parser.parse(s).getAsJsonObject();
-                        user = new Gson().fromJson(o.getAsJsonObject("data"), User.class);
+                        user = parse_data(response.body().string());
                         successfulLogin();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-                else {
-                    Toast.makeText(getBaseContext(), "Invalid login or password", Toast.LENGTH_SHORT).show();
+                    if (user == null) {
+                        Toast.makeText(getBaseContext(), "Invalid login or password", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
             @Override
@@ -111,6 +122,48 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), "Connection problem", Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+    private void loginWithToken(){
+        SharedPreferences settings = getSharedPreferences("pref", MODE_PRIVATE);
+        API.uid = settings.getString("uid", "");
+        API.client = settings.getString("client", "");
+        API.token = settings.getString("access_token", "");
+        if(!API.token.equals("")) {
+            Call<ResponseBody> call = apiInterface.validate_token();
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                    System.out.print(response + API.uid);
+                    if (response.isSuccessful()) {
+                        try {
+                            Toast.makeText(getBaseContext(), "Loging...", Toast.LENGTH_SHORT).show();
+                            user = parse_data(response.body().string());
+                            successfulLogin();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Toast.makeText(getBaseContext(), "failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(getBaseContext(), "Connection problem", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
+    private User parse_data(String s){
+        User user = null;
+        if(API.client != null){
+            JsonParser parser = new JsonParser();
+            JsonObject o = parser.parse(s).getAsJsonObject();
+            user = new Gson().fromJson(o.getAsJsonObject("data"), User.class);
+        }
+        return user;
+    }
 }

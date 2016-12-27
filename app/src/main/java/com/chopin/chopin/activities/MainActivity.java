@@ -1,9 +1,11 @@
 package com.chopin.chopin.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -186,9 +188,10 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                         if (response.isSuccessful()) {
-                            API.client = null;
-                            API.uid = null;
-                            API.token = null;
+                            SharedPreferences settings = getSharedPreferences("pref", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = settings.edit();
+                            editor.clear();
+                            editor.commit();
                         }
                     }
                     @Override

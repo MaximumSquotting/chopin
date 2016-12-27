@@ -109,6 +109,9 @@ public class API {
         @FormUrlEncoded
         @POST ("/api/v1/auth/password/")
         Call<ResponseBody> forgotenPassword(@Field("email") String email, @Field("redirect_url") String url);
+
+        @GET("/api/v1/auth/validate_token")
+        Call<ResponseBody> validate_token();
     }
 }
 
